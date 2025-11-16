@@ -14,52 +14,88 @@ const CustomCursor = () => {
     let mouseY = 0;
     let followerX = 0;
     let followerY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let rafId: number | null = null;
+    let isHovering = false;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
     };
 
-    const animateFollower = () => {
-      followerX += (mouseX - followerX) * 0.1;
-      followerY += (mouseY - followerY) * 0.1;
+    const animate = () => {
+      // Both cursor and follower follow mouse exactly (no smoothing for instant response)
+      cursorX = mouseX;
+      cursorY = mouseY;
+      followerX = mouseX;
+      followerY = mouseY;
       
-      follower.style.left = followerX + 'px';
-      follower.style.top = followerY + 'px';
+      // Use left/top with translate(-50%, -50%) to perfectly center elements
+      const scale = isHovering ? 1.5 : 1;
       
-      requestAnimationFrame(animateFollower);
+      // Position at mouse coordinates and center using translate(-50%, -50%)
+      cursor.style.left = `${cursorX}px`;
+      cursor.style.top = `${cursorY}px`;
+      cursor.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      
+      follower.style.left = `${followerX}px`;
+      follower.style.top = `${followerY}px`;
+      follower.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      
+      rafId = requestAnimationFrame(animate);
     };
 
     const handleMouseEnter = () => {
-      cursor.style.transform = 'scale(1.5)';
-      follower.style.transform = 'scale(1.5)';
+      isHovering = true;
     };
 
     const handleMouseLeave = () => {
-      cursor.style.transform = 'scale(1)';
-      follower.style.transform = 'scale(1)';
+      isHovering = false;
+    };
+
+    // Initialize positions on first mouse move
+    const updateInitialPosition = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorX = mouseX;
+      cursorY = mouseY;
+      followerX = mouseX;
+      followerY = mouseY;
+      
+      // Position immediately using left/top with translate(-50%, -50%) for perfect centering
+      cursor.style.left = `${cursorX}px`;
+      cursor.style.top = `${cursorY}px`;
+      cursor.style.transform = `translate(-50%, -50%)`;
+      
+      follower.style.left = `${followerX}px`;
+      follower.style.top = `${followerY}px`;
+      follower.style.transform = `translate(-50%, -50%)`;
     };
 
     document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mousemove', updateInitialPosition, { once: true });
     
     // Add hover effects for interactive elements
-    const interactiveElements = document.querySelectorAll('button, a, [role="button"]');
+    const interactiveElements = document.querySelectorAll('button, a, [role="button"], input, textarea, select');
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', handleMouseEnter);
       el.addEventListener('mouseleave', handleMouseLeave);
     });
 
-    animateFollower();
+    // Start animation loop
+    rafId = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mousemove', updateInitialPosition);
       interactiveElements.forEach(el => {
         el.removeEventListener('mouseenter', handleMouseEnter);
         el.removeEventListener('mouseleave', handleMouseLeave);
       });
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, []);
 

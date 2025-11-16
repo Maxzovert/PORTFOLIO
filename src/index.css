@@ -161,10 +161,14 @@
     border: 2px solid hsl(var(--primary));
     border-radius: 50%;
     position: fixed;
+    top: 0;
+    left: 0;
     pointer-events: none;
     z-index: 9999;
     mix-blend-mode: difference;
-    transition: var(--transition-smooth);
+    will-change: transform, left, top;
+    backface-visibility: hidden;
+    transform-origin: center;
   }
 
   .cursor-follower {
@@ -173,9 +177,13 @@
     background: hsl(var(--primary));
     border-radius: 50%;
     position: fixed;
+    top: 0;
+    left: 0;
     pointer-events: none;
     z-index: 9998;
-    transition: var(--transition-smooth);
+    will-change: transform, left, top;
+    backface-visibility: hidden;
+    transform-origin: center;
   }
 }
 

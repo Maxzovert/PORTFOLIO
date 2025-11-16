@@ -1,7 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Github, Play, Star } from 'lucide-react';
+import writexImage from '@/assets/Writex.png';
+import thryveImage from '@/assets/thryve.png';
+import medRemImage from '@/assets/Medrem.png';
+import snapNotesImage from '@/assets/Snapnotes.png';
+import resolviaImage from '@/assets/Resolvia.jpg';
+import LitChatImage from '@/assets/LitChat.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +16,7 @@ const ModernProjects = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const filterRef = useRef<HTMLDivElement>(null);
+  const [activeFilter, setActiveFilter] = useState<string>("All");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -117,69 +124,114 @@ const ModernProjects = () => {
     return () => ctx.revert();
   }, []);
 
+  // Animate projects when filter changes
+  useEffect(() => {
+    if (projectsRef.current) {
+      const projectCards = projectsRef.current.children;
+      gsap.fromTo(Array.from(projectCards),
+        { 
+          opacity: 0,
+          y: 30,
+          scale: 0.9
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power2.out"
+        }
+      );
+    }
+  }, [activeFilter]);
+
   const filters = [
-    { name: "All", active: true },
-    { name: "Web", active: false },
-    { name: "Mobile", active: false },
-    { name: "AI/ML", active: false }
+    { name: "All" },
+    { name: "Web" },
+    { name: "Mobile" },
+    { name: "AI/ML" }
   ];
+
+  const handleFilterClick = (filterName: string) => {
+    setActiveFilter(filterName);
+  };
 
   const projects = [
     {
-      title: "Neural Canvas",
-      category: "AI/ML",
-      description: "AI-powered digital art creation platform with real-time style transfer and collaborative features.",
-      tech: ["React", "TensorFlow.js", "WebGL", "Socket.io"],
-      stats: { stars: 1200, forks: 89 },
+      title: "WRITE-X",
+      category: "WEB",
+      description: "Blogging website Created using the MERN stack. WriteX a real one for writers who vibe deep, not for algorithms. Share what hits different and connect with people who actually feel you",
+      tech: ["React", "TipTap", "Supabase", "Gemini"],
       gradient: "bg-gradient-neon",
-      featured: true
+      featured: true,
+      image: writexImage,
+      liveLink: "https://writtex.onrender.com/",
+      githubLink: "https://github.com/Maxzovert/writex.git"
     },
     {
-      title: "Quantum Dashboard",
+      title: "Thryve",
       category: "Web",
-      description: "Real-time analytics dashboard with quantum-inspired visualizations and predictive modeling.",
-      tech: ["Next.js", "D3.js", "WebGL", "Python"],
-      stats: { stars: 856, forks: 67 },
+      description: "AI-powered LMS Built using Next.js. Integrated Google Gemini for AI-generated content.Implemented Clerk for authentication and Stripe for payments. Designed with Tailwind CSS and ShadCN for responsive UI.",
+      tech: ["Next.js", "Postgres", "Clerk", "Stripe"],
       gradient: "bg-gradient-cyber",
-      featured: true
+      featured: true,
+      image: thryveImage,
+      liveLink: "https://thryve-orpin.vercel.app/",
+      githubLink: "https://github.com/Maxzovert/thryve.git"
     },
     {
-      title: "Holographic UI Kit",
-      category: "Web",
-      description: "Futuristic component library with holographic effects and advanced animation systems.",
-      tech: ["React", "GSAP", "Three.js", "Framer"],
-      stats: { stars: 2100, forks: 145 },
-      gradient: "bg-gradient-primary",
-      featured: false
-    },
-    {
-      title: "Nexus Mobile",
-      category: "Mobile",
-      description: "Cross-platform mobile app with AR integration and real-time collaboration features.",
-      tech: ["React Native", "ARKit", "WebRTC", "Firebase"],
-      stats: { stars: 634, forks: 78 },
-      gradient: "bg-gradient-dark",
-      featured: false
-    },
-    {
-      title: "Code Synthesizer",
+      title: "Resolvia",
       category: "AI/ML",
-      description: "AI-powered code generation tool with natural language processing and intelligent suggestions.",
-      tech: ["Python", "OpenAI", "FastAPI", "React"],
-      stats: { stars: 3400, forks: 289 },
+      description: "Built Resolvia, an AI-powered helpdesk with agentic triage—designed end-to-end using MERN. It auto-classifies tickets, drafts replies, manages the knowledge base, and delivers a clean, role-based support workflow with full audit logs.",
+      tech: ["Next.js", "Gemini", "RB Auth", "MongoDB"],
       gradient: "bg-gradient-neon",
-      featured: true
+      featured: true,
+      image: resolviaImage,
+      liveLink: "https://github.com/Maxzovert/Resolvia.git",
+      githubLink: "https://github.com/Maxzovert/Resolvia.git"
+    }, 
+    {
+      title: "MED-REM",
+      category: "Mobile",
+      description: "As part of honing my skills in mobile development, I built Med-Rem, a privacy-first, user-friendly medication tracking app designed to help users stay consistent with their health routines",
+      tech: ["React Native", "Expo", "Css", "Android"],
+      gradient: "bg-gradient-primary",
+      featured: false,
+      image: medRemImage,
+      liveLink: "https://github.com/Maxzovert/med-rem.git",
+      githubLink: "https://github.com/Maxzovert/med-rem.git"
     },
     {
-      title: "Ethereal CMS",
+      title: "SnapNotes",
       category: "Web",
-      description: "Next-generation content management system with blockchain integration and AI assistance.",
-      tech: ["Vue.js", "Nuxt", "Ethereum", "IPFS"],
+      description: "MERN Stack Developed a secure notes app with JWT-based authentication. Enabled CRUD operations and title-based search. Used Mongoose for schema modeling and tested REST APIs.",
+      tech: ["React", "MongoDB", "Express", "Node.js"],
+      gradient: "bg-gradient-dark",
+      featured: false,
+      image: snapNotesImage,
+      liveLink: "https://github.com/Maxzovert/snapnotes.git",
+      githubLink: "https://github.com/Maxzovert/snapnotes.git"
+    },
+    {
+      title: "LitChat",
+      category: "Web",
+      description: "LIT_CHAT, a real-time chat app using React, Tailwind, Node, Express, and Socket.io fully deployed on Render. It delivers fast messaging, secure auth, clean UI, and smooth media handling with Cloudinary.",
+      tech: ["React.js", "Socket.io", "Mongodb", "Css"],
       stats: { stars: 945, forks: 123 },
       gradient: "bg-gradient-cyber",
-      featured: false
+      featured: false,
+      image: LitChatImage,
+      liveLink: "https://github.com/Maxzovert/LitChat.git",
+      githubLink: "https://github.com/Maxzovert/LitChat.git"
     }
   ];
+
+  const filteredProjects = activeFilter === "All" 
+    ? projects 
+    : projects.filter(project => 
+        project.category.toLowerCase() === activeFilter.toLowerCase()
+      );
 
   return (
     <section ref={sectionRef} className="section-padding relative">
@@ -210,8 +262,9 @@ const ModernProjects = () => {
             {filters.map((filter) => (
               <button
                 key={filter.name}
+                onClick={() => handleFilterClick(filter.name)}
                 className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                  filter.active
+                  activeFilter === filter.name
                     ? 'bg-primary text-primary-foreground shadow-neon'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
@@ -224,7 +277,7 @@ const ModernProjects = () => {
 
         {/* Projects grid */}
         <div ref={projectsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <div
               key={project.title}
               className={`glass-card overflow-hidden group perspective-1000 ${
@@ -233,40 +286,44 @@ const ModernProjects = () => {
             >
               {/* Project preview */}
               <div className={`h-48 ${project.gradient} relative overflow-hidden`}>
+                {project.image ? (
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                ) : null}
+                
                 {project.featured && (
-                  <div className="absolute top-4 left-4 flex items-center space-x-2">
-                    <Star className="h-4 w-4 text-background fill-current" />
-                    <span className="text-background text-sm font-medium">Featured</span>
+                  <div className="absolute top-4 left-4 flex items-center space-x-2 z-10">
+                    <Star className="h-4 w-4 text-background fill-current drop-shadow-lg" />
+                    <span className="text-background text-sm font-medium drop-shadow-lg">Featured</span>
                   </div>
                 )}
                 
-                <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform">
-                    <ExternalLink className="h-4 w-4 text-foreground" />
-                  </button>
-                  <button className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform">
+                <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                  <a 
+                    href={project.githubLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform"
+                  >
                     <Github className="h-4 w-4 text-foreground" />
-                  </button>
-                  <button className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform">
+                  </a>
+                  <a 
+                    href={project.liveLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform"
+                  >
                     <Play className="h-4 w-4 text-foreground" />
-                  </button>
+                  </a>
                 </div>
 
-                {/* Animated background elements */}
+                {/* Animated background overlay */}
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors duration-300"></div>
                 <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/30 to-transparent"></div>
-                
-                {/* Stats overlay */}
-                <div className="absolute bottom-4 left-4 flex items-center space-x-4 text-background/80">
-                  <div className="flex items-center space-x-1 text-sm">
-                    <Star className="h-3 w-3" />
-                    <span>{project.stats.stars}</span>
-                  </div>
-                  <div className="flex items-center space-x-1 text-sm">
-                    <Github className="h-3 w-3" />
-                    <span>{project.stats.forks}</span>
-                  </div>
-                </div>
+
               </div>
 
               {/* Project info */}

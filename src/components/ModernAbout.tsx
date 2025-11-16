@@ -138,7 +138,7 @@ const ModernAbout = () => {
 
   const stats = [
     { number: "50+", label: "Projects" },
-    { number: "5+", label: "Years" },
+    { number: "2+", label: "Years" },
     { number: "100%", label: "Passion" },
     { number: "∞", label: "Learning" }
   ];

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Send, Mail, MapPin, Phone, Github, Linkedin, Twitter, MessageSquare } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Github, Linkedin, Instagram, MessageSquare } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -153,28 +153,28 @@ const ModernContact = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "hello@developer.io",
+      value: "95abdullah95@gmail.com",
       gradient: "bg-gradient-neon"
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+1 (555) 123-4567",
+      value: "+91 9599454313",
       gradient: "bg-gradient-cyber"
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
+      value: "Delhi, India",
       gradient: "bg-gradient-primary"
     }
   ];
 
   const socialLinks = [
-    { icon: Github, label: "GitHub", href: "#", hoverColor: "hover:text-primary" },
-    { icon: Linkedin, label: "LinkedIn", href: "#", hoverColor: "hover:text-secondary" },
-    { icon: Twitter, label: "Twitter", href: "#", hoverColor: "hover:text-accent" },
-    { icon: MessageSquare, label: "Discord", href: "#", hoverColor: "hover:text-green" }
+    { icon: Github, label: "GitHub", href: "https://github.com/Maxzovert", hoverColor: "hover:text-primary" },
+    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/95abdullah99/", hoverColor: "hover:text-secondary" },
+    { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/_maxzovert_", hoverColor: "hover:text-accent" },
+    { icon: MessageSquare, label: "Discord", href: "https://discord.com/users/983761421269598248", hoverColor: "hover:text-green" }
   ];
 
   return (
