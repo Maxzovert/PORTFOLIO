@@ -168,12 +168,24 @@ const ModernHero = () => {
 
           {/* CTA buttons */}
           <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button className="neon-button group">
+            <button 
+              onClick={() => {
+                const projectsSection = document.getElementById('projects');
+                projectsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className="neon-button group"
+            >
               <Sparkles className="mr-2 h-5 w-5 group-hover:rotate-180 transition-transform duration-500" />
               View Projects
             </button>
             
-            <button className="relative px-8 py-4 rounded-xl bg-gradient-cyber text-background font-medium overflow-hidden group">
+            <button 
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className="relative px-8 py-4 rounded-xl bg-gradient-cyber text-background font-medium overflow-hidden group"
+            >
               <span className="relative z-10 flex items-center">
                 <Zap className="mr-2 h-5 w-5 group-hover:animate-pulse" />
                 Get In Touch

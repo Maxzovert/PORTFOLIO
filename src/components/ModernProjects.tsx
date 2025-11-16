@@ -234,7 +234,7 @@ const ModernProjects = () => {
       );
 
   return (
-    <section ref={sectionRef} className="section-padding relative">
+    <section id="projects" ref={sectionRef} className="section-padding relative">
       {/* Background grid */}
       <div className="absolute inset-0 cyber-grid opacity-30"></div>
       

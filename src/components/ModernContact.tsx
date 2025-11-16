@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Send, Mail, MapPin, Phone, Github, Linkedin, Instagram, MessageSquare } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Github, Linkedin, Instagram, MessageSquare, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { toast } from 'sonner';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +22,7 @@ const ModernContact = () => {
   });
   
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -118,8 +121,10 @@ const ModernContact = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    setIsSubmitting(true);
     
     // Animate submit button
     const submitBtn = e.currentTarget.querySelector('button[type="submit"]');
@@ -130,8 +135,84 @@ const ModernContact = () => {
       repeat: 1,
       ease: "power2.inOut"
     });
-    
-    console.log('Form submitted:', formData);
+
+    try {
+      // EmailJS configuration
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      // Validate environment variables
+      if (!serviceId || !templateId || !publicKey) {
+        const missingVars = [];
+        if (!serviceId) missingVars.push('VITE_EMAILJS_SERVICE_ID');
+        if (!templateId) missingVars.push('VITE_EMAILJS_TEMPLATE_ID');
+        if (!publicKey) missingVars.push('VITE_EMAILJS_PUBLIC_KEY');
+        
+        console.error('EmailJS configuration missing:', missingVars);
+        throw new Error(`EmailJS is not configured. Missing: ${missingVars.join(', ')}`);
+      }
+
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          project_type: formData.project || 'Not specified',
+          message: formData.message,
+          to_email: '95abdullah95@gmail.com', // Your email
+        },
+        publicKey
+      );
+
+      // Success feedback
+      toast.success('Message sent successfully!', {
+        description: 'I\'ll get back to you as soon as possible.',
+        duration: 5000,
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        project: '',
+        message: ''
+      });
+
+      // Animate success
+      if (submitBtn) {
+        gsap.to(submitBtn, {
+          scale: 1.05,
+          duration: 0.2,
+          yoyo: true,
+          repeat: 1,
+          ease: "power2.inOut"
+        });
+      }
+    } catch (error: any) {
+      console.error('Error sending email:', error);
+      
+      // Provide detailed error feedback
+      let errorMessage = 'Please try again later or contact me directly via email.';
+      
+      if (error?.message?.includes('not configured')) {
+        errorMessage = 'Email service is not configured. Please contact me directly via email.';
+      } else if (error?.text) {
+        errorMessage = `Email service error: ${error.text}`;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+      
+      // Error feedback
+      toast.error('Failed to send message', {
+        description: errorMessage,
+        duration: 7000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -153,20 +234,23 @@ const ModernContact = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "95abdullah95@gmail.com",
-      gradient: "bg-gradient-neon"
+      value: "95abdullah13@gmail.com",
+      gradient: "bg-gradient-neon",
+      href: "mailto:95abdullah13@gmail.com"
     },
     {
       icon: Phone,
       label: "Phone",
       value: "+91 9599454313",
-      gradient: "bg-gradient-cyber"
+      gradient: "bg-gradient-cyber",
+      href: "tel:+919599454313"
     },
     {
       icon: MapPin,
       label: "Location",
       value: "Delhi, India",
-      gradient: "bg-gradient-primary"
+      gradient: "bg-gradient-primary",
+      href: null
     }
   ];
 
@@ -178,7 +262,7 @@ const ModernContact = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="section-padding relative overflow-hidden">
+    <section id="contact" ref={sectionRef} className="section-padding relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0 cyber-grid opacity-20"></div>
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-neon morphing-blob opacity-10 blur-3xl"></div>
@@ -299,10 +383,20 @@ const ModernContact = () => {
 
                 <button
                   type="submit"
-                  className="neon-button w-full group"
+                  disabled={isSubmitting}
+                  className="neon-button w-full group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                  Launch Project
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                      Launch Project
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -316,11 +410,8 @@ const ModernContact = () => {
                 Direct Contact
               </h3>
               <div ref={contactInfoRef} className="space-y-4">
-                {contactInfo.map((info) => (
-                  <div
-                    key={info.label}
-                    className="glass-card p-6 hover:scale-105 transition-all duration-300 group"
-                  >
+                {contactInfo.map((info) => {
+                  const content = (
                     <div className="flex items-center space-x-4">
                       <div className={`p-4 rounded-2xl ${info.gradient} group-hover:scale-110 transition-transform duration-300`}>
                         <info.icon className="h-6 w-6 text-background" />
@@ -334,8 +425,25 @@ const ModernContact = () => {
                         </p>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+
+                  return info.href ? (
+                    <a
+                      key={info.label}
+                      href={info.href}
+                      className="glass-card p-6 hover:scale-105 transition-all duration-300 group block"
+                    >
+                      {content}
+                    </a>
+                  ) : (
+                    <div
+                      key={info.label}
+                      className="glass-card p-6 hover:scale-105 transition-all duration-300 group"
+                    >
+                      {content}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -367,7 +475,7 @@ const ModernContact = () => {
                 <span className="text-green font-mono text-sm">Available for Projects</span>
               </div>
               <p className="text-muted-foreground text-sm">
-                Currently accepting new projects for Q1 2024
+                Currently accepting new projects
               </p>
             </div>
           </div>

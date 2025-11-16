@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Brain, Rocket, Target, Zap } from 'lucide-react';
+import profile from '@/assets/MainImg.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ const ModernAbout = () => {
   const cardsRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -57,6 +59,30 @@ const ModernAbout = () => {
           ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: cardsRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Photo frame animation
+      gsap.fromTo(photoRef.current,
+        { 
+          opacity: 0,
+          scale: 0.8,
+          rotation: -5,
+          y: 50
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          rotation: 0,
+          y: 0,
+          duration: 1,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: photoRef.current,
             start: "top 80%",
             end: "bottom 20%",
             toggleActions: "play none none reverse"
@@ -159,6 +185,21 @@ const ModernAbout = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start mb-20">
+          {/* Photo Frame */}
+          <div ref={photoRef} className="relative">
+            <div className="glass-card p-4 rounded-2xl group hover:border-primary/50 transition-all duration-300">
+              <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
+                <img
+                  src={profile}
+                  alt="Abdullah - Developer"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                {/* Subtle overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            </div>
+          </div>
+
           {/* Text content */}
           <div ref={textRef} className="space-y-8">
             <div className="glass-card p-8">
@@ -194,15 +235,17 @@ const ModernAbout = () => {
               </p>
             </div>
           </div>
+        </div>
 
-          {/* Skills grid */}
-          <div ref={cardsRef} className="grid gap-6">
+        {/* Skills grid */}
+        <div className="mb-20">
+          <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {skills.map((skill, index) => (
               <div
                 key={skill.title}
-                className="glass-card p-6 group hover:border-primary/50 transition-all duration-500"
+                className="glass-card p-6 group hover:border-primary/50 transition-all duration-500 relative"
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex flex-col items-center text-center space-y-4">
                   <div className={`p-4 rounded-2xl ${skill.gradient} group-hover:scale-110 transition-transform duration-300`}>
                     <skill.icon className="h-6 w-6 text-background" />
                   </div>
@@ -210,7 +253,7 @@ const ModernAbout = () => {
                     <h3 className="font-bold text-xl mb-2 text-glow">
                       {skill.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed text-sm">
                       {skill.description}
                     </p>
                   </div>
