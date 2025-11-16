@@ -247,7 +247,7 @@ const ModernAbout = () => {
               >
                 <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
                   <div className={`p-3 sm:p-4 rounded-2xl ${skill.gradient} group-hover:scale-110 transition-transform duration-300`}>
-                    <skill.icon className="h-5 w-5 sm:h-6 sm:w-6 text-background" />
+                    <skill.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-lg sm:text-xl mb-2 text-glow">
