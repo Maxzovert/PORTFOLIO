@@ -241,14 +241,14 @@ const ModernProjects = () => {
       {/* Top border */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
 
-      <div className="container mx-auto max-w-7xl relative z-10">
+      <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
         {/* Section title */}
-        <div className="text-center mb-16">
-          <h2 ref={titleRef} className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8">
             <span className="neon-text">FEATURED</span>{' '}
             <span className="cyber-text font-mono" data-text="WORKS">WORKS</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-4">
             Exploring the boundaries of technology through innovative projects that blend 
             <span className="text-primary text-glow"> creativity</span>,{' '}
             <span className="text-secondary text-glow">performance</span>, and{' '}
@@ -257,13 +257,13 @@ const ModernProjects = () => {
         </div>
 
         {/* Filter tabs */}
-        <div ref={filterRef} className="flex justify-center mb-16">
-          <div className="glass-card p-2 flex space-x-2">
+        <div ref={filterRef} className="flex justify-center mb-8 sm:mb-12 md:mb-16 px-4">
+          <div className="glass-card p-1.5 sm:p-2 flex flex-wrap sm:flex-nowrap gap-2 sm:space-x-2 justify-center">
             {filters.map((filter) => (
               <button
                 key={filter.name}
                 onClick={() => handleFilterClick(filter.name)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
                   activeFilter === filter.name
                     ? 'bg-primary text-primary-foreground shadow-neon'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -276,7 +276,7 @@ const ModernProjects = () => {
         </div>
 
         {/* Projects grid */}
-        <div ref={projectsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div ref={projectsRef} className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12 md:mb-16">
           {filteredProjects.map((project, index) => (
             <div
               key={project.title}
@@ -285,7 +285,7 @@ const ModernProjects = () => {
               }`}
             >
               {/* Project preview */}
-              <div className={`h-48 ${project.gradient} relative overflow-hidden`}>
+              <div className={`h-40 sm:h-44 md:h-48 ${project.gradient} relative overflow-hidden`}>
                 {project.image ? (
                   <img 
                     src={project.image} 
@@ -327,23 +327,23 @@ const ModernProjects = () => {
               </div>
 
               {/* Project info */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
+              <div className="p-4 sm:p-5 md:p-6">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
                   <span className="text-xs font-mono text-primary border border-primary/30 px-2 py-1 rounded bg-primary/10">
                     {project.category}
                   </span>
                 </div>
 
-                <h3 className="font-bold text-xl mb-3 group-hover:text-primary transition-colors duration-300">
+                <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3 group-hover:text-primary transition-colors duration-300">
                   {project.title}
                 </h3>
                 
-                <p className="text-muted-foreground leading-relaxed mb-4 text-sm">
+                <p className="text-muted-foreground leading-relaxed mb-3 sm:mb-4 text-xs sm:text-sm">
                   {project.description}
                 </p>
                 
                 {/* Tech stack */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
@@ -362,9 +362,9 @@ const ModernProjects = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center">
-          <button className="neon-button group">
-            <Github className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
+        <div className="text-center px-4">
+          <button className="neon-button group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
+            <Github className="mr-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
             Explore All Projects
           </button>
         </div>

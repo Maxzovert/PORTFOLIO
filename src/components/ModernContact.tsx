@@ -265,35 +265,35 @@ const ModernContact = () => {
     <section id="contact" ref={sectionRef} className="section-padding relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0 cyber-grid opacity-20"></div>
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-neon morphing-blob opacity-10 blur-3xl"></div>
-      <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-gradient-cyber morphing-blob opacity-10 blur-3xl" style={{ animationDelay: '-3s' }}></div>
+      <div className="absolute top-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-gradient-neon morphing-blob opacity-10 blur-3xl"></div>
+      <div className="absolute bottom-1/4 left-1/4 w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-cyber morphing-blob opacity-10 blur-3xl" style={{ animationDelay: '-3s' }}></div>
 
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="container mx-auto max-w-6xl relative z-10 px-4 sm:px-6">
         {/* Section title */}
-        <div className="text-center mb-20">
-          <h2 ref={titleRef} className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8">
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8">
             <span className="neon-text">LET'S</span>{' '}
             <span className="cyber-text font-mono" data-text="CONNECT">CONNECT</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-4">
             Ready to build something extraordinary? Let's discuss your next project and bring 
             your vision to life with cutting-edge technology and creative innovation.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16">
           {/* Contact Form */}
-          <div className="glass-card p-8 relative">
+          <div className="glass-card p-6 sm:p-7 md:p-8 relative order-2 lg:order-1">
             {/* Form glow effect */}
             <div className="absolute inset-0 bg-gradient-primary opacity-5 rounded-2xl"></div>
             
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-6 text-glow flex items-center">
-                <MessageSquare className="mr-3 h-6 w-6 text-primary" />
+              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-glow flex items-center">
+                <MessageSquare className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                 Start a Conversation
               </h3>
               
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
                 <div className="form-field">
                   <label htmlFor="name" className="block text-sm font-medium mb-2 text-muted-foreground">
                     Your Name
@@ -306,7 +306,7 @@ const ModernContact = () => {
                     onChange={handleInputChange}
                     onFocus={() => handleFocus('name')}
                     onBlur={handleBlur}
-                    className={`w-full px-4 py-3 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono ${
+                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono text-sm sm:text-base touch-manipulation ${
                       focusedField === 'name'
                         ? 'border-primary shadow-neon'
                         : 'border-border hover:border-border/80'
@@ -328,7 +328,7 @@ const ModernContact = () => {
                     onChange={handleInputChange}
                     onFocus={() => handleFocus('email')}
                     onBlur={handleBlur}
-                    className={`w-full px-4 py-3 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono ${
+                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono text-sm sm:text-base touch-manipulation ${
                       focusedField === 'email'
                         ? 'border-secondary shadow-cyber'
                         : 'border-border hover:border-border/80'
@@ -350,7 +350,7 @@ const ModernContact = () => {
                     onChange={handleInputChange}
                     onFocus={() => handleFocus('project')}
                     onBlur={handleBlur}
-                    className={`w-full px-4 py-3 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono ${
+                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono text-sm sm:text-base touch-manipulation ${
                       focusedField === 'project'
                         ? 'border-accent shadow-glass'
                         : 'border-border hover:border-border/80'
@@ -371,7 +371,7 @@ const ModernContact = () => {
                     onFocus={() => handleFocus('message')}
                     onBlur={handleBlur}
                     rows={5}
-                    className={`w-full px-4 py-3 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none resize-none font-mono ${
+                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none resize-none font-mono text-sm sm:text-base touch-manipulation ${
                       focusedField === 'message'
                         ? 'border-green shadow-neon'
                         : 'border-border hover:border-border/80'
@@ -384,7 +384,7 @@ const ModernContact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="neon-button w-full group disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="neon-button w-full group disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base py-3 sm:py-4"
                 >
                   {isSubmitting ? (
                     <>
@@ -403,24 +403,24 @@ const ModernContact = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8 order-1 lg:order-2">
             {/* Contact details */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-glow">
+              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-glow">
                 Direct Contact
               </h3>
-              <div ref={contactInfoRef} className="space-y-4">
+              <div ref={contactInfoRef} className="space-y-3 sm:space-y-4">
                 {contactInfo.map((info) => {
                   const content = (
-                    <div className="flex items-center space-x-4">
-                      <div className={`p-4 rounded-2xl ${info.gradient} group-hover:scale-110 transition-transform duration-300`}>
-                        <info.icon className="h-6 w-6 text-background" />
+                    <div className="flex items-center space-x-3 sm:space-x-4">
+                      <div className={`p-3 sm:p-4 rounded-2xl ${info.gradient} group-hover:scale-110 transition-transform duration-300`}>
+                        <info.icon className="h-5 w-5 sm:h-6 sm:w-6 text-background" />
                       </div>
                       <div>
-                        <p className="font-medium text-muted-foreground text-sm">
+                        <p className="font-medium text-muted-foreground text-xs sm:text-sm">
                           {info.label}
                         </p>
-                        <p className="text-lg font-mono text-glow">
+                        <p className="text-base sm:text-lg font-mono text-glow break-words">
                           {info.value}
                         </p>
                       </div>
@@ -431,14 +431,14 @@ const ModernContact = () => {
                     <a
                       key={info.label}
                       href={info.href}
-                      className="glass-card p-6 hover:scale-105 transition-all duration-300 group block"
+                      className="glass-card p-4 sm:p-5 md:p-6 hover:scale-105 transition-all duration-300 group block"
                     >
                       {content}
                     </a>
                   ) : (
                     <div
                       key={info.label}
-                      className="glass-card p-6 hover:scale-105 transition-all duration-300 group"
+                      className="glass-card p-4 sm:p-5 md:p-6 hover:scale-105 transition-all duration-300 group"
                     >
                       {content}
                     </div>
@@ -449,18 +449,18 @@ const ModernContact = () => {
 
             {/* Social links */}
             <div>
-              <h4 className="text-xl font-bold mb-6 text-glow">
+              <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-glow">
                 Connect Online
               </h4>
-              <div ref={socialRef} className="grid grid-cols-2 gap-4">
+              <div ref={socialRef} className="grid grid-cols-2 gap-3 sm:gap-4">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
-                    className={`glass-card p-6 flex flex-col items-center justify-center text-center hover:scale-110 transition-all duration-300 group ${social.hoverColor}`}
+                    className={`glass-card p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center text-center hover:scale-110 transition-all duration-300 group ${social.hoverColor}`}
                   >
-                    <social.icon className="h-8 w-8 mb-2 group-hover:scale-125 transition-transform duration-300" />
-                    <span className="font-medium font-mono text-sm">
+                    <social.icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 mb-2 group-hover:scale-125 transition-transform duration-300" />
+                    <span className="font-medium font-mono text-xs sm:text-sm">
                       {social.label}
                     </span>
                   </a>
@@ -469,12 +469,12 @@ const ModernContact = () => {
             </div>
 
             {/* Availability status */}
-            <div className="glass-card p-6 text-center">
-              <div className="flex items-center justify-center mb-3">
-                <div className="w-3 h-3 bg-green rounded-full animate-pulse mr-2"></div>
-                <span className="text-green font-mono text-sm">Available for Projects</span>
+            <div className="glass-card p-4 sm:p-5 md:p-6 text-center">
+              <div className="flex items-center justify-center mb-2 sm:mb-3">
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green rounded-full animate-pulse mr-2"></div>
+                <span className="text-green font-mono text-xs sm:text-sm">Available for Projects</span>
               </div>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs sm:text-sm">
                 Currently accepting new projects
               </p>
             </div>

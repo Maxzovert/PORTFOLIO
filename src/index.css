@@ -149,6 +149,13 @@
     overflow-x: hidden;
     cursor: none;
   }
+
+  /* Show default cursor on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    body {
+      cursor: auto;
+    }
+  }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-space;
@@ -207,7 +214,7 @@
   }
   
   .section-padding {
-    @apply px-6 py-32 lg:px-8 lg:py-40;
+    @apply py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8;
   }
   
   .glass-card {
