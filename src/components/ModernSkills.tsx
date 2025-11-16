@@ -124,28 +124,28 @@ const ModernSkills = () => {
         </div>
 
         {/* Skills grid */}
-        <div ref={skillsRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+        <div ref={skillsRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {skillCategories.map((category, index) => (
             <div
               key={category.title}
-              className="glass-card p-6 sm:p-8 group hover:border-primary/50 transition-all duration-500 relative"
+              className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 group hover:border-primary/50 transition-all duration-500 relative"
             >
               {/* Category header */}
-              <div className="flex items-center mb-4 sm:mb-6">
-                <div className={`p-3 sm:p-4 rounded-2xl ${category.gradient} group-hover:scale-110 transition-transform duration-300 mr-4`}>
-                  <category.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+              <div className="flex items-center mb-3 sm:mb-4 md:mb-6">
+                <div className={`p-2.5 sm:p-3 md:p-3.5 lg:p-4 rounded-xl sm:rounded-2xl ${category.gradient} group-hover:scale-110 transition-transform duration-300 mr-3 sm:mr-4 flex-shrink-0`}>
+                  <category.icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
                 </div>
-                <h3 className="font-bold text-lg sm:text-xl text-glow">
+                <h3 className="font-bold text-base sm:text-lg md:text-xl text-glow break-words">
                   {category.title}
                 </h3>
               </div>
 
               {/* Skills list */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1.5 text-xs sm:text-sm bg-muted/50 rounded-lg text-muted-foreground hover:bg-primary/20 hover:text-primary transition-all duration-200 font-mono border border-muted/30 hover:border-primary/30"
+                    className="px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-muted/50 rounded-md sm:rounded-lg text-muted-foreground hover:bg-primary/20 hover:text-primary transition-all duration-200 font-mono border border-muted/30 hover:border-primary/30"
                   >
                     {skill}
                   </span>
