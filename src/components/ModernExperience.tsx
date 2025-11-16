@@ -92,12 +92,14 @@ const ModernExperience = () => {
 
       <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
         {/* Section title */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8">
-            <span className="neon-text">WORK</span>{' '}
-            <span className="cyber-text font-mono" data-text="EXPERIENCE">EXPERIENCE</span>
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 px-2">
+          <h2 ref={titleRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 leading-tight">
+            <span className="neon-text block sm:inline">WORK</span>
+            <span className="hidden sm:inline"> </span>
+            <br className="sm:hidden" />
+            <span className="cyber-text font-mono block sm:inline mt-1 sm:mt-0" data-text="EXPERIENCE">EXPERIENCE</span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-4">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-2 sm:px-4">
             My professional journey and the projects I've contributed to
           </p>
         </div>
