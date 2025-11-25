@@ -144,10 +144,17 @@
     @apply border-border;
   }
 
+  html {
+    /* Lenis handles smooth scrolling */
+    overscroll-behavior: none; /* Prevent bounce effect */
+  }
+
   body {
     @apply bg-background text-foreground font-space;
     overflow-x: hidden;
     cursor: none;
+    overscroll-behavior: none; /* Prevent bounce effect */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   }
 
   /* Show default cursor on touch devices */
@@ -251,6 +258,56 @@
   .neon-button:hover {
     @apply text-primary-foreground;
     box-shadow: var(--shadow-neon);
+    transform: translateY(-2px);
+  }
+  
+  .neon-button-secondary {
+    @apply relative inline-flex items-center justify-center px-8 py-4 font-medium rounded-xl;
+    @apply bg-transparent text-secondary border-2 border-secondary;
+    @apply transition-all duration-500 overflow-hidden;
+    box-shadow: 0 0 20px hsl(var(--secondary) / 0.3);
+  }
+  
+  .neon-button-secondary::before {
+    content: '';
+    @apply absolute inset-0 bg-secondary;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+    z-index: -1;
+  }
+  
+  .neon-button-secondary:hover::before {
+    transform: translateX(0);
+  }
+  
+  .neon-button-secondary:hover {
+    @apply text-secondary-foreground;
+    box-shadow: 0 0 20px hsl(var(--secondary) / 0.3), 0 0 40px hsl(var(--secondary) / 0.2), 0 0 80px hsl(var(--secondary) / 0.05);
+    transform: translateY(-2px);
+  }
+  
+  .neon-button-accent {
+    @apply relative inline-flex items-center justify-center px-8 py-4 font-medium rounded-xl;
+    @apply bg-transparent text-accent border-2 border-accent;
+    @apply transition-all duration-500 overflow-hidden;
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.3);
+  }
+  
+  .neon-button-accent::before {
+    content: '';
+    @apply absolute inset-0 bg-accent;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+    z-index: -1;
+  }
+  
+  .neon-button-accent:hover::before {
+    transform: translateX(0);
+  }
+  
+  .neon-button-accent:hover {
+    @apply text-accent-foreground;
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.3), 0 0 40px hsl(var(--accent) / 0.2), 0 0 80px hsl(var(--accent) / 0.05);
     transform: translateY(-2px);
   }
   

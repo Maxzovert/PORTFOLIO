@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowDown, Code2, Sparkles, Zap } from 'lucide-react';
+import { ArrowDown, Code2, Sparkles, Zap, Download } from 'lucide-react';
+import resumePdf from '@/assets/Exp Resume.pdf';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -171,7 +172,14 @@ const ModernHero = () => {
             <button 
               onClick={() => {
                 const projectsSection = document.getElementById('projects');
-                projectsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (projectsSection) {
+                  const lenis = (window as any).lenis;
+                  if (lenis) {
+                    lenis.scrollTo(projectsSection, { offset: 0, duration: 2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+                  } else {
+                    projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }
               }}
               className="neon-button group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 touch-manipulation"
             >
@@ -181,16 +189,35 @@ const ModernHero = () => {
             
             <button 
               onClick={() => {
-                const contactSection = document.getElementById('contact');
-                contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const link = document.createElement('a');
+                link.href = resumePdf;
+                link.download = 'Abdullah_Resume.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
               }}
-              className="relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-gradient-cyber text-background font-medium overflow-hidden group text-sm sm:text-base touch-manipulation"
+              className="neon-button-secondary group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 touch-manipulation"
             >
-              <span className="relative z-10 flex items-center justify-center">
-                <Zap className="mr-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:animate-pulse" />
-                Get In Touch
-              </span>
-              <div className="absolute inset-0 hologram"></div>
+              <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-180 transition-transform duration-500" />
+              Resume
+            </button>
+            
+            <button 
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  const lenis = (window as any).lenis;
+                  if (lenis) {
+                    lenis.scrollTo(contactSection, { offset: 0, duration: 2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+                  } else {
+                    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }
+              }}
+              className="neon-button-accent group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 touch-manipulation"
+            >
+              <Zap className="mr-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-180 transition-transform duration-500" />
+              Get In Touch
             </button>
           </div>
 
