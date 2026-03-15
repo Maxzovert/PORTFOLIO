@@ -232,7 +232,7 @@ const ModernProjects = () => {
       title: "Gawri Ganga",
       category: "E-Commerce",
       description: "Gawriganga.com — Full e-commerce platform for Gawri Ganga with customer-facing website and admin dashboard. Product catalog, orders, and store management.",
-      tech: ["React", "Node.js", "MongoDB", "Vercel", "Render"],
+      tech: ["React", "Node.js", "Postgres","Docker", "AWS"],
       gradient: "bg-gradient-neon",
       featured: true,
       image: gawriGangaImage,
