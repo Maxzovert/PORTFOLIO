@@ -8,6 +8,9 @@ import medRemImage from '@/assets/Medrem.png';
 import snapNotesImage from '@/assets/Snapnotes.png';
 import resolviaImage from '@/assets/Resolvia.jpg';
 import LitChatImage from '@/assets/LitChat.png';
+import gawriGangaImage from '@/assets/Gawri Ganga.png';
+import legaloidsImage from '@/assets/Legaloids.png';
+import metamicrodigitalImage from '@/assets/Metamicrodigital.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +19,7 @@ const ModernProjects = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const filterRef = useRef<HTMLDivElement>(null);
-  const [activeFilter, setActiveFilter] = useState<string>("All");
+  const [activeFilter, setActiveFilter] = useState<string>("Personal");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -147,17 +150,15 @@ const ModernProjects = () => {
   }, [activeFilter]);
 
   const filters = [
-    { name: "All" },
-    { name: "Web" },
-    { name: "Mobile" },
-    { name: "AI/ML" }
+    { name: "Personal" },
+    { name: "Client" }
   ];
 
   const handleFilterClick = (filterName: string) => {
     setActiveFilter(filterName);
   };
 
-  const projects = [
+  const personalProjects = [
     {
       title: "WRITE-X",
       category: "WEB",
@@ -172,7 +173,7 @@ const ModernProjects = () => {
     {
       title: "Thryve",
       category: "Web",
-      description: "AI-powered LMS Built using Next.js. Integrated Google Gemini for AI-generated content.Implemented Clerk for authentication and Stripe for payments. Designed with Tailwind CSS and ShadCN for responsive UI.",
+      description: "AI-powered LMS Built using Next.js. Integrated Google Gemini for AI-generated content. Implemented Clerk for authentication and Stripe for payments. Designed with Tailwind CSS and ShadCN for responsive UI.",
       tech: ["Next.js", "Postgres", "Clerk", "Stripe"],
       gradient: "bg-gradient-cyber",
       featured: true,
@@ -190,7 +191,7 @@ const ModernProjects = () => {
       image: resolviaImage,
       liveLink: "https://github.com/Maxzovert/Resolvia.git",
       githubLink: "https://github.com/Maxzovert/Resolvia.git"
-    }, 
+    },
     {
       title: "MED-REM",
       category: "Mobile",
@@ -218,7 +219,6 @@ const ModernProjects = () => {
       category: "Web",
       description: "LIT_CHAT, a real-time chat app using React, Tailwind, Node, Express, and Socket.io fully deployed on Render. It delivers fast messaging, secure auth, clean UI, and smooth media handling with Cloudinary.",
       tech: ["React.js", "Socket.io", "Mongodb", "Css"],
-      stats: { stars: 945, forks: 123 },
       gradient: "bg-gradient-cyber",
       featured: false,
       image: LitChatImage,
@@ -227,11 +227,43 @@ const ModernProjects = () => {
     }
   ];
 
-  const filteredProjects = activeFilter === "All" 
-    ? projects 
-    : projects.filter(project => 
-        project.category.toLowerCase() === activeFilter.toLowerCase()
-      );
+  const clientProjects = [
+    {
+      title: "Gawri Ganga",
+      category: "E-Commerce",
+      description: "Gawriganga.com — Full e-commerce platform for Gawri Ganga with customer-facing website and admin dashboard. Product catalog, orders, and store management.",
+      tech: ["React", "Node.js", "MongoDB", "Vercel", "Render"],
+      gradient: "bg-gradient-neon",
+      featured: true,
+      image: gawriGangaImage,
+      liveLink: "https://gawriganga.com/",
+      githubLink: undefined as string | undefined
+    },
+    {
+      title: "Legaloids",
+      category: "Law Firm",
+      description: "Legaloids.com — Professional law firm website. Clean, trustworthy design with practice areas, team, and contact flows for client inquiries.",
+      tech: ["React", "Tailwind", "Vercel"],
+      gradient: "bg-gradient-cyber",
+      featured: true,
+      image: legaloidsImage,
+      liveLink: "https://legaloids.com/",
+      githubLink: undefined as string | undefined
+    },
+    {
+      title: "Meta Micro Digital",
+      category: "Corporate",
+      description: "Metamicrodigital.com — Company website for Meta Micro Digital. Modern landing with services, about, and contact sections.",
+      tech: ["React", "Tailwind", "Vercel"],
+      gradient: "bg-gradient-primary",
+      featured: true,
+      image: metamicrodigitalImage,
+      liveLink: "https://metamicrodigital.com/",
+      githubLink: undefined as string | undefined
+    }
+  ];
+
+  const filteredProjects = activeFilter === "Personal" ? personalProjects : clientProjects;
 
   return (
     <section id="projects" ref={sectionRef} className="section-padding relative">
@@ -249,10 +281,9 @@ const ModernProjects = () => {
             <span className="cyber-text font-mono" data-text="WORKS">WORKS</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-4">
-            Exploring the boundaries of technology through innovative projects that blend 
-            <span className="text-primary text-glow"> creativity</span>,{' '}
-            <span className="text-secondary text-glow">performance</span>, and{' '}
-            <span className="text-accent text-glow">user experience</span>
+            {activeFilter === "Personal"
+              ? "Personal projects — exploring the boundaries of technology through creativity, performance, and user experience."
+              : "Client & freelancing work — websites and platforms delivered for businesses and brands."}
           </p>
         </div>
 
@@ -302,14 +333,16 @@ const ModernProjects = () => {
                 )}
                 
                 <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  <a 
-                    href={project.githubLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform"
-                  >
-                    <Github className="h-4 w-4 text-foreground" />
-                  </a>
+                  {project.githubLink && (
+                    <a 
+                      href={project.githubLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform"
+                    >
+                      <Github className="h-4 w-4 text-foreground" />
+                    </a>
+                  )}
                   <a 
                     href={project.liveLink} 
                     target="_blank" 

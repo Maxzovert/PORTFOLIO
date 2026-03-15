@@ -6,7 +6,8 @@ import {
   Database, 
   Server,
   Zap,
-  Globe
+  Globe,
+  Rocket
 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -94,7 +95,7 @@ const ModernSkills = () => {
     {
       title: "Databases",
       icon: Database,
-      skills: ["MongoDB", "NoSQL"],
+      skills: ["Postgres", "MongoDB", "NoSQL"],
       gradient: "bg-gradient-dark"
     },
     {
@@ -102,6 +103,12 @@ const ModernSkills = () => {
       icon: Zap,
       skills: ["Git", "GitHub", "JWT", "Bcrypt", "Clerk", "Google Gemini API"],
       gradient: "bg-gradient-neon"
+    },
+    {
+      title: "Deployment",
+      icon: Rocket,
+      skills: ["Vercel", "Render", "AWS"],
+      gradient: "bg-gradient-cyber"
     }
   ];
 
