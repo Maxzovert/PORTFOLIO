@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, Code2, Sparkles, Zap, Download } from 'lucide-react';
-import resumePdf from '@/assets/Exp Resume.pdf';
+import resumePdf from '@/assets/UP-RESUME.pdf';
 
 gsap.registerPlugin(ScrollTrigger);
 
