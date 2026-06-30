@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { GraduationCap, Calendar, Award, MapPin } from 'lucide-react';
+import { GraduationCap, Calendar, Award, MapPin, ArrowUpRight, Plus, Sparkles } from 'lucide-react';
+import SectionDecorations from './SectionDecorations';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,14 +95,30 @@ const ModernEducation = () => {
 
   return (
     <section ref={sectionRef} id="education" className="section-padding dark-section relative overflow-hidden">
+      <SectionDecorations variant="education" light />
+
       <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
-        <div className="text-left mb-12 sm:mb-16 md:mb-20">
-          <h2 ref={titleRef} className="section-title section-title-light text-left">
-            EDUCATION
-          </h2>
-          <p className="body-copy mt-4 max-w-lg text-[var(--gray-mid)]">
-            Academic background and continuous learning journey
-          </p>
+        <div className="text-left mb-12 sm:mb-16 md:mb-20 relative">
+          <div className="flex items-start justify-between gap-4">
+            <h2 ref={titleRef} className="section-title section-title-light text-left">
+              EDUCATION
+            </h2>
+            <span className="star-symbol-light mt-4 hidden text-3xl md:block">✱</span>
+          </div>
+          <span className="script-word-light absolute right-[5%] top-[20%] hidden md:block rotate-[-5deg]">
+            Learning
+          </span>
+          <div className="mt-2 flex items-center gap-3">
+            <Sparkles className="h-5 w-5 text-[var(--bg-paper)] opacity-50 rotate-[8deg]" strokeWidth={1.5} />
+            <p className="body-copy max-w-lg text-[var(--gray-mid)]">
+              Academic background and continuous learning journey
+            </p>
+          </div>
+          <div className="mt-4 hidden sm:inline-flex items-center gap-2 border border-white/25 bg-white/5 px-3 py-2 rounded-lg rotate-[3deg]">
+            <ArrowUpRight className="h-4 w-4 text-[var(--bg-paper)] opacity-80" strokeWidth={1.5} />
+            <span className="micro-label text-[var(--bg-paper)] opacity-90">Academics</span>
+          </div>
+          <Plus className="absolute left-[3%] top-[65%] hidden h-5 w-5 text-[var(--bg-paper)] opacity-35 lg:block rotate-[-20deg]" strokeWidth={1.5} />
         </div>
 
         {/* Education grid */}
@@ -109,18 +126,18 @@ const ModernEducation = () => {
           {education.map((edu, index) => (
             <div
               key={index}
-              className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 group hover:border-primary/50 transition-all duration-500 relative h-full"
+              className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 group hover:border-white/40 transition-all duration-500 relative h-full"
             >
               {/* Icon and degree */}
               <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-                <div className={`p-2.5 sm:p-3 md:p-3.5 lg:p-4 rounded-xl sm:rounded-2xl ${edu.gradient} group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
-                  <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
+                <div className="p-2.5 sm:p-3 md:p-3.5 lg:p-4 border border-white/30 bg-white/5 group-hover:border-[var(--bg-paper)] transition-all duration-300 flex-shrink-0 rounded-md">
+                  <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[var(--bg-paper)]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-glow mb-1 sm:mb-1.5 break-words leading-tight">
+                  <h3 className="font-bebas text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.04em] text-[var(--bg-paper)] mb-1 sm:mb-1.5 break-words leading-[1.05]">
                     {edu.degree}
                   </h3>
-                  <p className="text-primary text-xs sm:text-sm md:text-base font-medium mb-1 sm:mb-2 break-words">
+                  <p className="text-[var(--gray-mid)] text-xs sm:text-sm md:text-base font-inter tracking-[0.03em] mb-1 sm:mb-2 break-words">
                     {edu.field}
                   </p>
                 </div>
@@ -128,21 +145,27 @@ const ModernEducation = () => {
 
               {/* Institution and location */}
               <div className="mb-3 sm:mb-4 md:mb-5 lg:mb-6 space-y-1.5 sm:space-y-2">
-                <div className="flex items-start gap-2 text-muted-foreground">
-                  <Award className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="font-semibold text-foreground text-xs sm:text-sm md:text-base break-words leading-relaxed">{edu.institution}</span>
+                <div className="flex items-start gap-2.5 text-[var(--gray-mid)]">
+                  <span className="mt-0.5 flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center border border-white/20 bg-white/5 flex-shrink-0 rounded-sm">
+                    <Award className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[var(--bg-paper)]" />
+                  </span>
+                  <span className="font-semibold text-[var(--bg-paper)] text-xs sm:text-sm md:text-base break-words leading-relaxed tracking-[0.02em]">{edu.institution}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-muted-foreground">
-                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm md:text-base text-[var(--gray-mid)] tracking-[0.02em]">
+                  <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center border border-white/20 bg-white/5 flex-shrink-0 rounded-sm">
+                    <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[var(--bg-paper)]" />
+                  </span>
                   <span className="break-words">{edu.location}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-muted-foreground">
-                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm md:text-base text-[var(--gray-mid)] tracking-[0.02em]">
+                  <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center border border-white/20 bg-white/5 flex-shrink-0 rounded-sm">
+                    <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[var(--bg-paper)]" />
+                  </span>
                   <span>{edu.period}</span>
                 </div>
                 {edu.gpa && (
                   <div className="text-xs sm:text-sm md:text-base pt-1">
-                    <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-primary/20 text-primary rounded-md sm:rounded-lg font-mono border border-primary/30 inline-block break-words">
+                    <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 border border-white/25 text-[var(--bg-paper)] inline-block break-words font-inter tracking-[0.04em] rounded-md">
                       {edu.gpa}
                     </span>
                   </div>
@@ -152,12 +175,12 @@ const ModernEducation = () => {
               {/* Achievements */}
               {edu.achievements && edu.achievements.length > 0 && (
                 <div className="mt-auto">
-                  <h4 className="text-xs sm:text-sm md:text-base font-semibold text-foreground mb-2 sm:mb-3">Highlights:</h4>
+                  <h4 className="micro-label text-[var(--bg-paper)] mb-2 sm:mb-3 tracking-[0.12em]">Highlights</h4>
                   <ul className="space-y-1.5 sm:space-y-2">
                     {edu.achievements.map((achievement, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm md:text-base text-muted-foreground">
-                        <span className="text-primary mt-1 sm:mt-1.5 flex-shrink-0">▹</span>
-                        <span className="break-words leading-relaxed">{achievement}</span>
+                      <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm md:text-base text-[var(--gray-mid)]">
+                        <span className="text-[var(--bg-paper)] mt-1 sm:mt-1.5 flex-shrink-0">▹</span>
+                        <span className="break-words leading-relaxed tracking-[0.02em]">{achievement}</span>
                       </li>
                     ))}
                   </ul>
@@ -170,9 +193,6 @@ const ModernEducation = () => {
           ))}
         </div>
       </div>
-
-      {/* Bottom border */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent to-transparent"></div>
     </section>
   );
 };

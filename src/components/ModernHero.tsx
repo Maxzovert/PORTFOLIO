@@ -1,10 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowDown, ArrowUpRight, Asterisk, Download, Plus, Sparkles } from 'lucide-react';
-import resumePdf from '@/assets/UP-RESUME.pdf';
-import profileImage from '@/assets/Heroimg.png';
-import heroGraphic from '@/assets/graphic.png';
+import { ArrowDown, ArrowUpRight, Asterisk, Download, Heart, Plus, Sparkles, Star } from 'lucide-react';
+import resumePdf from '@/assets/Up-Resume.pdf';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,15 +10,17 @@ const ModernHero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const scriptRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const titleWrapRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const graphicRef = useRef<HTMLImageElement>(null);
   const starRef = useRef<HTMLDivElement>(null);
   const starLeftRef = useRef<HTMLDivElement>(null);
   const arrowRef = useRef<HTMLDivElement>(null);
   const plusRef = useRef<HTMLDivElement>(null);
   const sparkRef = useRef<HTMLDivElement>(null);
+  const heartRef = useRef<HTMLDivElement>(null);
+  const plusRightRef = useRef<HTMLDivElement>(null);
+  const starSmallRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -31,24 +31,24 @@ const ModernHero = () => {
       arrowRef.current,
       plusRef.current,
       sparkRef.current,
-      graphicRef.current,
+      heartRef.current,
+      plusRightRef.current,
+      starSmallRef.current,
     ].filter(Boolean);
 
     const ctx = gsap.context(() => {
       gsap.set(
         [
           headerRef.current,
-          scriptRef.current,
-          titleWrapRef.current,
-          imageRef.current,
+          contentRef.current,
           ctaRef.current,
           scrollRef.current,
           ...decorEls,
         ],
         { opacity: 0 }
       );
-      gsap.set(scriptRef.current, { y: -30, rotation: -8 });
-      gsap.set(imageRef.current, { y: 80, scale: 0.92 });
+      gsap.set(scriptRef.current, { y: -20, rotation: -8 });
+      gsap.set(contentRef.current, { y: 40 });
       gsap.set(headerRef.current, { y: -20 });
       gsap.set(ctaRef.current, { y: 30 });
       gsap.set(starRef.current, { scale: 0, rotation: -90 });
@@ -56,20 +56,23 @@ const ModernHero = () => {
       gsap.set(arrowRef.current, { x: -20, y: 20 });
       gsap.set(plusRef.current, { scale: 0, rotation: -180 });
       gsap.set(sparkRef.current, { scale: 0.5 });
-      gsap.set(graphicRef.current, { scale: 0.9, y: 30 });
+      gsap.set(heartRef.current, { scale: 0, rotation: -20 });
+      gsap.set(plusRightRef.current, { scale: 0, rotation: 180 });
+      gsap.set(starSmallRef.current, { scale: 0 });
 
       const tl = gsap.timeline({ delay: 0.15 });
 
       tl.to(headerRef.current, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
-        .to(scriptRef.current, { opacity: 1, y: 0, rotation: -2, duration: 1, ease: 'power4.out' }, '-=0.5')
-        .to(titleWrapRef.current, { opacity: 1, duration: 1.1, ease: 'power4.out' }, '-=0.7')
-        .to(imageRef.current, { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out' }, '-=0.9')
-        .to(graphicRef.current, { opacity: 0.45, scale: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=1')
+        .to(contentRef.current, { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out' }, '-=0.5')
+        .to(scriptRef.current, { rotation: -2, duration: 1, ease: 'power4.out' }, '-=0.9')
         .to(starRef.current, { opacity: 1, scale: 1, rotation: 0, duration: 0.7, ease: 'back.out(2)' }, '-=0.8')
         .to(starLeftRef.current, { opacity: 1, scale: 1, rotation: 0, duration: 0.7, ease: 'back.out(2)' }, '-=0.6')
         .to(arrowRef.current, { opacity: 0.85, x: 0, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
         .to(plusRef.current, { opacity: 0.8, scale: 1, rotation: 0, duration: 0.7, ease: 'back.out(1.7)' }, '-=0.5')
         .to(sparkRef.current, { opacity: 0.9, scale: 1, duration: 0.6, ease: 'back.out(2)' }, '-=0.4')
+        .to(heartRef.current, { opacity: 0.7, scale: 1, rotation: 0, duration: 0.65, ease: 'back.out(1.8)' }, '-=0.45')
+        .to(plusRightRef.current, { opacity: 0.75, scale: 1, rotation: 0, duration: 0.65, ease: 'back.out(1.7)' }, '-=0.5')
+        .to(starSmallRef.current, { opacity: 0.8, scale: 1, duration: 0.55, ease: 'back.out(2)' }, '-=0.45')
         .to(ctaRef.current, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
         .to(scrollRef.current, { opacity: 1, duration: 0.6 }, '-=0.3');
 
@@ -114,8 +117,23 @@ const ModernHero = () => {
         repeat: -1,
       });
 
-      gsap.to(graphicRef.current, {
-        y: -12,
+      gsap.to(heartRef.current, {
+        y: -8,
+        duration: 3.5,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+      });
+
+      gsap.to(plusRightRef.current, {
+        rotation: -90,
+        duration: 10,
+        ease: 'none',
+        repeat: -1,
+      });
+
+      gsap.to(starSmallRef.current, {
+        rotation: 15,
         duration: 4,
         ease: 'sine.inOut',
         yoyo: true,
@@ -150,15 +168,23 @@ const ModernHero = () => {
 
   return (
     <section ref={heroRef} className="hero paper-bg min-h-screen relative overflow-hidden">
-      <div className="hero-texture-left" aria-hidden />
+      {/* <div className="hero-texture-left" aria-hidden />
+      <div className="hero-texture-right" aria-hidden /> */}
 
-      <img
-        ref={graphicRef}
-        src={heroGraphic}
-        alt=""
-        className="hero-graphic"
-        aria-hidden
-      />
+      <div className="hero-side-rail hero-side-rail--left hidden lg:flex" aria-hidden>
+        <span className="hero-rail-line" />
+        <span className="hero-rail-tag">Build</span>
+        <Plus className="hero-rail-icon" strokeWidth={1.5} />
+      </div>
+
+      <div className="hero-side-rail hero-side-rail--right hidden lg:flex" aria-hidden>
+        <Star className="hero-rail-icon" strokeWidth={1.5} />
+        <span className="hero-rail-tag">Ship</span>
+        <span className="hero-rail-line" />
+      </div>
+
+      <span className="hero-edge-num hidden md:block" aria-hidden>01</span>
+      <span className="hero-edge-symbol hidden md:block" aria-hidden>✱</span>
 
       <div ref={arrowRef} className="hero-deco hero-deco-arrow" aria-hidden>
         <ArrowUpRight strokeWidth={1.5} />
@@ -172,6 +198,18 @@ const ModernHero = () => {
         <Sparkles strokeWidth={1.5} />
       </div>
 
+      <div ref={heartRef} className="hero-deco hero-deco-heart" aria-hidden>
+        <Heart strokeWidth={1.5} />
+      </div>
+
+      <div ref={plusRightRef} className="hero-deco hero-deco-plus-r" aria-hidden>
+        <Plus strokeWidth={1.5} />
+      </div>
+
+      <div ref={starSmallRef} className="hero-deco hero-deco-star-sm" aria-hidden>
+        <Star strokeWidth={1.5} />
+      </div>
+
       <header ref={headerRef} className="top-header">
         <div className="header-dots">
           <span className="header-dot" />
@@ -179,25 +217,23 @@ const ModernHero = () => {
           <span className="header-dot" />
         </div>
         <div className="header-center micro-label">Full Stack Developer</div>
-        <div className="header-right micro-label">Abdullah</div>
+        <div className="header-right micro-label">Developer</div>
       </header>
 
-      <div ref={scriptRef} className="hero-script">
-        Full stack
-      </div>
+      <div ref={contentRef} className="hero-content">
+        <div ref={scriptRef} className="hero-script">
+          Mohd
+        </div>
 
-      <div ref={titleWrapRef} className="hero-title-wrap">
-        <h1 ref={titleRef} className="hero-title">
-          DEVELOPER
-        </h1>
+        <div ref={titleWrapRef} className="hero-title-wrap">
+          <h1 ref={titleRef} className="hero-title">
+            ABDULLAH
+          </h1>
+          <div className="hero-name-wrap">
+            <p className="hero-name">Full stack developer</p>
+          </div>
+        </div>
       </div>
-
-      <img
-        ref={imageRef}
-        src={profileImage}
-        alt="Abdullah — Developer"
-        className="hero-image editorial-img"
-      />
 
       <div ref={starRef} className="hero-deco hero-deco-star" aria-hidden>
         <Asterisk strokeWidth={2} />

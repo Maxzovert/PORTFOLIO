@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, Play } from 'lucide-react';
+import { ArrowUpRight, Github, Plus, Smartphone, Sparkles } from 'lucide-react';
+import SectionDecorations from './SectionDecorations';
 import writexImage from '@/assets/Writex.png';
 import thryveImage from '@/assets/thryve.png';
 import medRemImage from '@/assets/Medrem.png';
@@ -11,394 +12,518 @@ import LitChatImage from '@/assets/LitChat.png';
 import gawriGangaImage from '@/assets/Gawri Ganga.png';
 import legaloidsImage from '@/assets/Legaloids.png';
 import metamicrodigitalImage from '@/assets/Metamicrodigital.png';
+import tobedoneImage from '@/assets/TOBEDONE.jpeg';
+import vcrmImage from '@/assets/vcrm.png';
 
 gsap.registerPlugin(ScrollTrigger);
+
+type ProjectType = 'Personal' | 'Client' | 'Verience';
+
+interface Project {
+  title: string;
+  category: string;
+  description: string;
+  highlights: string[];
+  tech: string[];
+  image: string;
+  liveLink: string;
+  liveLabel?: string;
+  githubLink?: string;
+  extraLinks?: { label: string; href: string; icon?: 'android' }[];
+  type: ProjectType;
+  featured?: boolean;
+}
+
+const getBentoSpan = (index: number, hovered: number | null) => {
+  if (hovered === index) return { col: 2, row: 2 };
+  return { col: 1, row: 1 };
+};
 
 const ModernProjects = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
+  const showcaseRef = useRef<HTMLDivElement>(null);
   const filterRef = useRef<HTMLDivElement>(null);
-  const [activeFilter, setActiveFilter] = useState<string>("Personal");
+  const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const personalProjects: Project[] = [
+    {
+      title: 'WRITE-X',
+      category: 'Web',
+      description:
+        'A full-stack blogging platform I designed and built entirely on my own, from the writer-facing UI to the backend APIs and database layer. WriteX is built for creators who want a real space to share ideas, not content optimized for algorithms.',
+      highlights: [
+        'Solo end-to-end development, frontend, backend, auth, and content workflows',
+        'Rich-text editing with TipTap, Supabase for data, and Gemini-powered features',
+        'Deployed and maintained independently on Render',
+      ],
+      tech: ['React', 'TipTap', 'Supabase', 'Gemini'],
+      image: writexImage,
+      liveLink: 'https://writtex.onrender.com/',
+      githubLink: 'https://github.com/Maxzovert/writex.git',
+      type: 'Personal',
+      featured: true,
+    },
+    {
+      title: 'Thryve',
+      category: 'Web',
+      description:
+        'An AI-powered learning management system I built solo from scratch using Next.js. I handled the full product flow, course creation, AI content generation, user authentication, payments, and the complete responsive UI.',
+      highlights: [
+        'Built entirely on my own: frontend, backend logic, database, and integrations',
+        'Google Gemini for AI-generated course content and learning assistance',
+        'Clerk authentication and Stripe payments wired into a production-ready LMS',
+        'Deployed on Vercel with a clean Tailwind + ShadCN interface',
+      ],
+      tech: ['Next.js', 'Postgres', 'Clerk', 'Stripe'],
+      image: thryveImage,
+      liveLink: 'https://thryve-orpin.vercel.app/',
+      githubLink: 'https://github.com/Maxzovert/thryve.git',
+      type: 'Personal',
+      featured: true,
+    },
+    {
+      title: 'Resolvia',
+      category: 'AI/ML',
+      description:
+        'An AI-powered helpdesk platform I developed end-to-end on my own. Resolvia uses agentic triage to classify support tickets, draft replies, manage a knowledge base, and deliver a role-based workflow with full audit logs.',
+      highlights: [
+        'Solo full-stack build, architecture, APIs, admin panel, and AI pipeline',
+        'Automated ticket classification and AI-drafted responses using Google Gemini',
+        'Role-based access, knowledge base management, and complete audit trail',
+      ],
+      tech: ['Next.js', 'Gemini', 'RB Auth', 'MongoDB'],
+      image: resolviaImage,
+      liveLink: 'https://github.com/Maxzovert/Resolvia.git',
+      githubLink: 'https://github.com/Maxzovert/Resolvia.git',
+      type: 'Personal',
+      featured: true,
+    },
+    {
+      title: 'MED-REM',
+      category: 'Mobile',
+      description:
+        'A privacy-first medication tracking app I designed and built on my own using React Native and Expo. The focus was on helping users stay consistent with health routines through a simple, trustworthy mobile experience.',
+      highlights: [
+        'Solo mobile development, UI, state management, reminders, and Android build',
+        'Privacy-first approach with a clean, distraction-free interface',
+        'Built to make daily medication tracking fast and reliable',
+      ],
+      tech: ['React Native', 'Expo', 'CSS', 'Android'],
+      image: medRemImage,
+      liveLink: 'https://github.com/Maxzovert/med-rem.git',
+      githubLink: 'https://github.com/Maxzovert/med-rem.git',
+      type: 'Personal',
+    },
+    {
+      title: 'SnapNotes',
+      category: 'Web',
+      description:
+        'A secure notes application I built solo on the MERN stack. I implemented JWT-based authentication, full CRUD operations, title-based search, Mongoose schema modeling, and tested REST APIs, everything from database to UI.',
+      highlights: [
+        'End-to-end solo build with React frontend and Node/Express backend',
+        'Secure auth, note management, and search functionality',
+        'REST API design with MongoDB and Mongoose',
+      ],
+      tech: ['React', 'MongoDB', 'Express', 'Node.js'],
+      image: snapNotesImage,
+      liveLink: 'https://github.com/Maxzovert/snapnotes.git',
+      githubLink: 'https://github.com/Maxzovert/snapnotes.git',
+      type: 'Personal',
+    },
+    {
+      title: 'LitChat',
+      category: 'Web',
+      description:
+        'A real-time chat application I built entirely on my own with React, Node, Express, and Socket.io. I handled messaging, authentication, media uploads, and deployment, delivering a fast, clean chat experience.',
+      highlights: [
+        'Solo full-stack development with real-time Socket.io messaging',
+        'Secure authentication and Cloudinary-powered media handling',
+        'Fully deployed on Render with a responsive Tailwind UI',
+      ],
+      tech: ['React.js', 'Socket.io', 'MongoDB', 'CSS'],
+      image: LitChatImage,
+      liveLink: 'https://github.com/Maxzovert/LitChat.git',
+      githubLink: 'https://github.com/Maxzovert/LitChat.git',
+      type: 'Personal',
+    },
+  ];
+
+  const verienceProjects: Project[] = [
+    {
+      title: 'TOBEDONE',
+      category: 'Project Management',
+      description:
+        'Verience\'s in-house project management platform, built as a React Native app and web app. We designed it so our team can assign tasks to employees, track progress, and pull reports in a few clicks, without jumping between separate tools for chat, tasks, and updates.',
+      highlights: [
+        'Built in-house to replace multiple apps with one workflow for tasks, chat, and reporting',
+        'Actively used daily by the Verience team for project management and internal operations',
+        'Group tasks and individual tasks with employee assignment and quick status reports',
+        'In-app chat where tasks can be created and assigned directly from conversations',
+      ],
+      tech: ['React Native', 'React', 'Node.js', 'Web App'],
+      image: tobedoneImage,
+      liveLink: 'https://tobedone-app.vercel.app/home',
+      liveLabel: 'Web App',
+      extraLinks: [
+        {
+          label: 'Android',
+          href: 'https://expo.dev/accounts/maxzovert/projects/tobedone/builds/a1f86ea3-cc5b-48f0-9e82-784e565e93d1',
+          icon: 'android',
+        },
+      ],
+      type: 'Verience',
+      featured: true,
+    },
+    {
+      title: 'VCRM',
+      category: 'CRM',
+      description:
+        'Verience\'s own CRM, built with Next.js and PostgreSQL. Instead of stitching together separate tools for email, follow-ups, invoices, and payments, we built one system tailored to how we actually work with clients.',
+      highlights: [
+        'Custom CRM built to keep sales, follow-ups, billing, and client communication in one place',
+        'Actively used daily by the Verience team for client follow-ups, invoices, and payments',
+        'Send personalised emails to clients and manage follow-up schedules from a single dashboard',
+        'Next.js frontend with PostgreSQL for reliable data and a fast, polished admin experience',
+      ],
+      tech: ['Next.js', 'PostgreSQL', 'Tailwind', 'TypeScript'],
+      image: vcrmImage,
+      liveLink: 'https://vs-crm-nine.vercel.app/',
+      type: 'Verience',
+      featured: true,
+    },
+  ];
+
+  const clientProjects: Project[] = [
+    {
+      title: 'Gawri Ganga',
+      category: 'E-Commerce',
+      description:
+        'A complete e-commerce platform for Gawri Ganga that I built entirely on my own, both frontend and backend. I handled everything from product catalog and customer checkout to the admin dashboard, order management, inventory workflows, and production deployment. The site now sees 100+ daily users in production.',
+      highlights: [
+        'Solo full-stack development, React storefront, Node.js APIs, and Postgres database',
+        'Built product catalog, cart, checkout, orders, and a full admin dashboard by myself',
+        'Dockerized the application and deployed on AWS EC2 with production configuration',
+        'Serving 100+ daily users in production with stable performance and uptime',
+      ],
+      tech: ['React', 'Node.js', 'Postgres', 'Docker', 'AWS'],
+      image: gawriGangaImage,
+      liveLink: 'https://gawriganga.com/',
+      type: 'Client',
+      featured: true,
+    },
+    {
+      title: 'Legaloids',
+      category: 'Law Firm',
+      description:
+        'A professional law firm website I designed and developed on my own for Legaloids. I built the full frontend experience, practice area pages, team profiles, contact flows, and a trustworthy brand presence tailored for legal client inquiries.',
+      highlights: [
+        'Solo development from design to deployment, no team, built end-to-end by me',
+        'Clean, credible UI with structured practice areas and lead-capture contact flows',
+        'Responsive layout optimized for mobile and desktop visitors',
+        'Deployed on Vercel with fast load times and production-ready performance',
+      ],
+      tech: ['React', 'Tailwind', 'Vercel'],
+      image: legaloidsImage,
+      liveLink: 'https://legaloids.com/',
+      type: 'Client',
+      featured: true,
+    },
+    {
+      title: 'Meta Micro Digital',
+      category: 'Corporate',
+      description:
+        'The official company website for Meta Micro Digital, built entirely by me. I created a modern corporate landing with services, about, and contact sections, focused on clarity, brand positioning, and converting visitors into inquiries.',
+      highlights: [
+        'Solo build, strategy, UI design, frontend development, and deployment',
+        'Structured service showcase with clear CTAs and contact integration',
+        'Polished responsive design aligned with the company brand',
+        'Live on Vercel with optimized performance and maintainable codebase',
+      ],
+      tech: ['React', 'Tailwind', 'Vercel'],
+      image: metamicrodigitalImage,
+      liveLink: 'https://metamicrodigital.com/',
+      type: 'Client',
+      featured: true,
+    },
+  ];
+
+  const filters = ['All', 'Clients', 'Personal', 'Verience'] as const;
+
+  const filteredProjects =
+    activeFilter === 'Personal'
+      ? personalProjects
+      : activeFilter === 'Clients'
+        ? clientProjects
+        : activeFilter === 'Verience'
+          ? verienceProjects
+          : [...clientProjects, ...personalProjects, ...verienceProjects];
+
+  const sectionSubtitle =
+    activeFilter === 'Personal'
+      ? 'Personal projects, exploring technology through creativity, performance, and user experience.'
+      : activeFilter === 'Clients'
+        ? 'Client and freelancing work, websites and platforms delivered for businesses and brands.'
+        : activeFilter === 'Verience'
+          ? 'In-house products built at Verience Studio, our own tools for project management, CRM, and daily operations.'
+          : 'A full showcase of Verience builds, client work, and personal projects, from shipped products to experimental ideas.';
+
+  const scriptLabel =
+    activeFilter === 'Personal'
+      ? 'Builds'
+      : activeFilter === 'Clients'
+        ? 'Clients'
+        : activeFilter === 'Verience'
+          ? 'Verience'
+          : 'All Work';
+
+  const handleFilterClick = (filterName: string) => {
+    setActiveFilter(filterName);
+    setHoveredIndex(null);
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title animation
-      gsap.fromTo(titleRef.current,
-        { 
-          opacity: 0,
-          y: 100,
-          rotationX: -15 
-        },
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0, y: 80 },
         {
           opacity: 1,
           y: 0,
-          rotationX: 0,
-          duration: 1,
-          ease: "power4.out",
+          duration: 0.9,
+          ease: 'power4.out',
           scrollTrigger: {
             trigger: titleRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
         }
       );
 
-      // Filter animation
-      gsap.fromTo(filterRef.current?.children,
-        { opacity: 0, scale: 0.8, y: 20 },
+      gsap.fromTo(
+        filterRef.current?.children,
+        { opacity: 0, y: 16 },
         {
           opacity: 1,
-          scale: 1,
           y: 0,
           duration: 0.5,
-          stagger: 0.1,
-          ease: "back.out(1.7)",
+          stagger: 0.08,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: filterRef.current,
-            start: "top 85%",
-            end: "bottom 15%",
-            toggleActions: "play none none reverse"
-          }
+            start: 'top 88%',
+            toggleActions: 'play none none reverse',
+          },
         }
       );
 
-      // Projects animation with 3D effect
-      gsap.fromTo(projectsRef.current?.children,
-        { 
-          opacity: 0,
-          y: 80,
-          rotationY: -15,
-          scale: 0.8
-        },
+      gsap.fromTo(
+        showcaseRef.current,
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          rotationY: 0,
-          scale: 1,
-          duration: 1,
-          stagger: {
-            amount: 0.8,
-            grid: [2, 3],
-            from: "start"
-          },
-          ease: "power3.out",
+          duration: 0.8,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: projectsRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
+            trigger: showcaseRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
         }
       );
-
-      // Hover animations for project cards
-      const projectCards = projectsRef.current?.children;
-      if (projectCards) {
-        Array.from(projectCards).forEach((card: any) => {
-          const handleMouseEnter = () => {
-            gsap.to(card, {
-              rotationY: 5,
-              rotationX: 5,
-              z: 50,
-              duration: 0.3,
-              ease: "power2.out"
-            });
-          };
-
-          const handleMouseLeave = () => {
-            gsap.to(card, {
-              rotationY: 0,
-              rotationX: 0,
-              z: 0,
-              duration: 0.5,
-              ease: "elastic.out(1, 0.3)"
-            });
-          };
-
-          card.addEventListener('mouseenter', handleMouseEnter);
-          card.addEventListener('mouseleave', handleMouseLeave);
-        });
-      }
-
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Animate projects when filter changes
-  useEffect(() => {
-    if (projectsRef.current) {
-      const projectCards = projectsRef.current.children;
-      gsap.fromTo(Array.from(projectCards),
-        { 
-          opacity: 0,
-          y: 30,
-          scale: 0.9
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: "power2.out"
-        }
-      );
-    }
-  }, [activeFilter]);
-
-  const filters = [
-    { name: "Personal" },
-    { name: "Client" }
-  ];
-
-  const handleFilterClick = (filterName: string) => {
-    setActiveFilter(filterName);
-  };
-
-  const personalProjects = [
-    {
-      title: "WRITE-X",
-      category: "WEB",
-      description: "Blogging website Created using the MERN stack. WriteX a real one for writers who vibe deep, not for algorithms. Share what hits different and connect with people who actually feel you",
-      tech: ["React", "TipTap", "Supabase", "Gemini"],
-      gradient: "bg-gradient-neon",
-      featured: true,
-      image: writexImage,
-      liveLink: "https://writtex.onrender.com/",
-      githubLink: "https://github.com/Maxzovert/writex.git"
-    },
-    {
-      title: "Thryve",
-      category: "Web",
-      description: "AI-powered LMS Built using Next.js. Integrated Google Gemini for AI-generated content. Implemented Clerk for authentication and Stripe for payments. Designed with Tailwind CSS and ShadCN for responsive UI.",
-      tech: ["Next.js", "Postgres", "Clerk", "Stripe"],
-      gradient: "bg-gradient-cyber",
-      featured: true,
-      image: thryveImage,
-      liveLink: "https://thryve-orpin.vercel.app/",
-      githubLink: "https://github.com/Maxzovert/thryve.git"
-    },
-    {
-      title: "Resolvia",
-      category: "AI/ML",
-      description: "Built Resolvia, an AI-powered helpdesk with agentic triage—designed end-to-end using MERN. It auto-classifies tickets, drafts replies, manages the knowledge base, and delivers a clean, role-based support workflow with full audit logs.",
-      tech: ["Next.js", "Gemini", "RB Auth", "MongoDB"],
-      gradient: "bg-gradient-neon",
-      featured: true,
-      image: resolviaImage,
-      liveLink: "https://github.com/Maxzovert/Resolvia.git",
-      githubLink: "https://github.com/Maxzovert/Resolvia.git"
-    },
-    {
-      title: "MED-REM",
-      category: "Mobile",
-      description: "As part of honing my skills in mobile development, I built Med-Rem, a privacy-first, user-friendly medication tracking app designed to help users stay consistent with their health routines",
-      tech: ["React Native", "Expo", "Css", "Android"],
-      gradient: "bg-gradient-primary",
-      featured: false,
-      image: medRemImage,
-      liveLink: "https://github.com/Maxzovert/med-rem.git",
-      githubLink: "https://github.com/Maxzovert/med-rem.git"
-    },
-    {
-      title: "SnapNotes",
-      category: "Web",
-      description: "MERN Stack Developed a secure notes app with JWT-based authentication. Enabled CRUD operations and title-based search. Used Mongoose for schema modeling and tested REST APIs.",
-      tech: ["React", "MongoDB", "Express", "Node.js"],
-      gradient: "bg-gradient-dark",
-      featured: false,
-      image: snapNotesImage,
-      liveLink: "https://github.com/Maxzovert/snapnotes.git",
-      githubLink: "https://github.com/Maxzovert/snapnotes.git"
-    },
-    {
-      title: "LitChat",
-      category: "Web",
-      description: "LIT_CHAT, a real-time chat app using React, Tailwind, Node, Express, and Socket.io fully deployed on Render. It delivers fast messaging, secure auth, clean UI, and smooth media handling with Cloudinary.",
-      tech: ["React.js", "Socket.io", "Mongodb", "Css"],
-      gradient: "bg-gradient-cyber",
-      featured: false,
-      image: LitChatImage,
-      liveLink: "https://github.com/Maxzovert/LitChat.git",
-      githubLink: "https://github.com/Maxzovert/LitChat.git"
-    }
-  ];
-
-  const clientProjects = [
-    {
-      title: "Gawri Ganga",
-      category: "E-Commerce",
-      description: "Gawriganga.com — Full e-commerce platform for Gawri Ganga with customer-facing website and admin dashboard. Product catalog, orders, and store management.",
-      tech: ["React", "Node.js", "Postgres","Docker", "AWS"],
-      gradient: "bg-gradient-neon",
-      featured: true,
-      image: gawriGangaImage,
-      liveLink: "https://gawriganga.com/",
-      githubLink: undefined as string | undefined
-    },
-    {
-      title: "Legaloids",
-      category: "Law Firm",
-      description: "Legaloids.com — Professional law firm website. Clean, trustworthy design with practice areas, team, and contact flows for client inquiries.",
-      tech: ["React", "Tailwind", "Vercel"],
-      gradient: "bg-gradient-cyber",
-      featured: true,
-      image: legaloidsImage,
-      liveLink: "https://legaloids.com/",
-      githubLink: undefined as string | undefined
-    },
-    {
-      title: "Meta Micro Digital",
-      category: "Corporate",
-      description: "Metamicrodigital.com — Company website for Meta Micro Digital. Modern landing with services, about, and contact sections.",
-      tech: ["React", "Tailwind", "Vercel"],
-      gradient: "bg-gradient-primary",
-      featured: true,
-      image: metamicrodigitalImage,
-      liveLink: "https://metamicrodigital.com/",
-      githubLink: undefined as string | undefined
-    }
-  ];
-
-  const filteredProjects = activeFilter === "Personal" ? personalProjects : clientProjects;
-
   return (
     <section id="projects" ref={sectionRef} className="section-padding paper-bg relative overflow-hidden">
-      <div className="editorial-divider absolute top-0 left-0" />
+      <SectionDecorations variant="projects" />
 
       <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
-        <div className="text-left mb-8 sm:mb-12 relative">
-          <span className="script-word absolute right-[5%] top-0 hidden md:block rotate-[-4deg] text-5xl">
-            {activeFilter === "Personal" ? "Builds" : "Clients"}
+        <div className="text-left mb-8 sm:mb-10 md:mb-12 relative">
+          <div className="flex items-start justify-between gap-4">
+            <h2 ref={titleRef} className="section-title text-left">
+              PROJECTS
+            </h2>
+            <span className="star-symbol mt-4 hidden text-3xl opacity-80 md:block">✱</span>
+          </div>
+          <span className="script-word absolute right-[5%] top-[18%] hidden md:block rotate-[-6deg] text-5xl">
+            {scriptLabel}
           </span>
-          <h2 ref={titleRef} className="section-title text-left">
-            PROJECTS
-          </h2>
-          <p className="body-copy mt-4 max-w-lg">
-            {activeFilter === "Personal"
-              ? "Personal projects — exploring technology through creativity, performance, and user experience."
-              : "Client & freelancing work — websites and platforms delivered for businesses and brands."}
-          </p>
+          <div className="mt-2 flex items-center gap-3">
+            <Sparkles className="h-5 w-5 text-editorial-blue opacity-60 rotate-[-8deg]" strokeWidth={1.5} />
+            <p className="body-copy max-w-xl">{sectionSubtitle}</p>
+          </div>
+          <Plus className="absolute left-[2%] top-[72%] hidden h-5 w-5 text-charcoal/45 lg:block rotate-[-18deg]" strokeWidth={1.5} />
         </div>
 
-        <div ref={filterRef} className="mb-8 sm:mb-12 md:mb-16 inline-flex border border-black">
+        <div ref={filterRef} className="mb-8 sm:mb-10 inline-flex overflow-hidden rounded-xl border border-black">
           {filters.map((filter) => (
             <button
-              key={filter.name}
-              onClick={() => handleFilterClick(filter.name)}
-              className={`px-6 sm:px-8 py-3 micro-label transition-all duration-300 border-r border-black last:border-r-0 ${
-                activeFilter === filter.name
+              key={filter}
+              onClick={() => handleFilterClick(filter)}
+              className={`px-5 sm:px-8 py-3 micro-label transition-all duration-300 border-r border-black last:border-r-0 ${
+                activeFilter === filter
                   ? 'bg-[var(--black)] text-[var(--bg-paper)]'
                   : 'bg-transparent text-[var(--charcoal)] hover:bg-[var(--gray-light)]'
               }`}
             >
-              {filter.name}
+              {filter}
             </button>
           ))}
         </div>
 
-        {/* Projects grid */}
-        <div ref={projectsRef} className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12 md:mb-16">
-          {filteredProjects.map((project, index) => (
-            <div
-              key={project.title}
-              className={`glass-card overflow-hidden group perspective-1000 ${
-                project.featured ? 'lg:col-span-1' : ''
-              }`}
-            >
-              {/* Project preview */}
-              <div className={`h-40 sm:h-44 md:h-48 relative overflow-hidden border-b border-black/10`}>
-                {project.image ? (
-                  <img 
-                    src={project.image} 
+        <div
+          ref={showcaseRef}
+          className="projects-bento"
+          onMouseLeave={() => setHoveredIndex(null)}
+        >
+          {filteredProjects.map((project, index) => {
+            const isExpanded = hoveredIndex === index;
+            const isDimmed = hoveredIndex !== null && !isExpanded;
+            const { col, row } = getBentoSpan(index, hoveredIndex);
+
+            return (
+              <article
+                key={`${project.title}-${index}`}
+                className={`bento-card ${isExpanded ? 'bento-card-expanded' : ''} ${isDimmed ? 'bento-card-dimmed' : ''}`}
+                style={{
+                  gridColumn: `span ${col}`,
+                  gridRow: `span ${row}`,
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onFocus={() => setHoveredIndex(index)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                    setHoveredIndex(null);
+                  }
+                }}
+                tabIndex={0}
+              >
+                <div className="bento-card-media">
+                  <img
+                    src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover editorial-img group-hover:scale-105 transition-transform duration-500"
+                    className="bento-card-image"
                   />
-                ) : null}
-                
-                {project.featured && (
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="micro-label bg-[var(--black)] text-[var(--bg-paper)] px-2 py-1">Featured</span>
+                </div>
+
+                {!isExpanded && (
+                  <div className="bento-card-label">
+                    <p className="micro-label text-[var(--bg-paper)]/80 mb-1">{project.category}</p>
+                    <h3 className="font-bebas text-lg sm:text-xl uppercase text-[var(--bg-paper)] leading-tight tracking-[0.04em]">
+                      {project.title}
+                    </h3>
                   </div>
                 )}
-                
-                <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  {project.githubLink && (
-                    <a 
-                      href={project.githubLink} 
-                      target="_blank" 
+
+                <div className={`bento-card-panel ${isExpanded ? 'bento-card-panel-visible' : ''}`}>
+                  <div className="bento-card-panel-scroll">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <span className="micro-label border border-[var(--blue)]/30 px-2 py-0.5 rounded-md text-[var(--blue)]">
+                        {project.category}
+                      </span>
+                      <span className="micro-label border border-black/15 px-2 py-0.5 rounded-md text-charcoal">
+                        {project.type}
+                      </span>
+                    </div>
+
+                    <h3 className="font-bebas text-xl sm:text-2xl uppercase text-[var(--blue)] leading-tight tracking-[0.04em]">
+                      {project.title}
+                    </h3>
+
+                    <p className="body-copy text-sm leading-[1.65] tracking-[0.02em] mt-2 text-charcoal">
+                      {project.description}
+                    </p>
+
+                    {project.highlights.length > 0 && (
+                      <ul className="mt-2 space-y-1.5">
+                        {project.highlights.slice(0, 3).map((highlight) => (
+                          <li
+                            key={highlight}
+                            className="flex items-start gap-2 text-xs sm:text-sm text-charcoal leading-snug"
+                          >
+                            <span className="text-[var(--blue)] mt-0.5 flex-shrink-0">▹</span>
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <div className="flex flex-wrap gap-1.5 mt-2.5">
+                      {project.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 text-xs border border-black/20 rounded-md bg-[var(--gray-light)]/40 text-charcoal font-inter"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="bento-card-actions">
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform"
+                      className="bento-card-link bento-card-link-primary"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      <Github className="h-4 w-4 text-foreground" />
+                      {project.liveLabel ?? 'View Live'}
+                      <ArrowUpRight className="h-4 w-4" />
                     </a>
-                  )}
-                  <a 
-                    href={project.liveLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="p-2 bg-background/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform"
-                  >
-                    <Play className="h-4 w-4 text-foreground" />
-                  </a>
+                    {project.extraLinks?.map((link) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bento-card-link bento-card-link-secondary"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {link.icon === 'android' ? (
+                          <Smartphone className="h-4 w-4" />
+                        ) : (
+                          <ArrowUpRight className="h-4 w-4" />
+                        )}
+                        {link.label}
+                      </a>
+                    ))}
+                    {project.githubLink && (
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bento-card-link bento-card-link-secondary"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Github className="h-4 w-4" />
+                        Source
+                      </a>
+                    )}
+                  </div>
                 </div>
-
-                {/* Animated background overlay */}
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors duration-300"></div>
-                <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/30 to-transparent"></div>
-
-              </div>
-
-              {/* Project info */}
-              <div className="p-4 sm:p-5 md:p-6">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="micro-label border border-black/30 px-2 py-1 text-[var(--blue)]">
-                    {project.category}
-                  </span>
-                </div>
-
-                <h3 className="font-bebas text-xl sm:text-2xl mb-2 sm:mb-3 uppercase tracking-tight group-hover:text-[var(--blue)] transition-colors">
-                  {project.title}
-                </h3>
-                
-                <p className="body-copy mb-3 sm:mb-4 text-sm">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 text-xs border border-black/15 text-charcoal font-inter"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="absolute inset-0 border border-transparent group-hover:border-black/30 transition-all duration-300 pointer-events-none" />
-            </div>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
-        <div className="text-left px-4 mt-8">
+        <div className="text-left mt-10 sm:mt-12">
           <a
             href="https://github.com/Maxzovert"
             target="_blank"
             rel="noopener noreferrer"
-            className="editorial-btn inline-flex"
+            className="editorial-btn editorial-btn-dark inline-flex"
           >
-            <Github className="mr-2 h-4 w-4" />
-            Explore All Projects
+            <Github className="h-4 w-4" />
+            Explore All on GitHub
           </a>
         </div>
       </div>
-
-      <div className="editorial-divider absolute bottom-0 left-0" />
     </section>
   );
 };

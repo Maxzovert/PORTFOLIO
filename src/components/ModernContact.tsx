@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Send, Mail, MapPin, Phone, Github, Linkedin, Instagram, MessageSquare, Loader2 } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Github, Linkedin, Instagram, MessageSquare, Loader2, ArrowUpRight, Plus, Sparkles, Globe } from 'lucide-react';
+import SectionDecorations from './SectionDecorations';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 
@@ -13,107 +14,82 @@ const ModernContact = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const contactInfoRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     project: '',
-    message: ''
+    message: '',
   });
-  
-  const [focusedField, setFocusedField] = useState<string | null>(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title animation
-      gsap.fromTo(titleRef.current,
-        { 
-          opacity: 0,
-          y: 100,
-          rotationX: -15 
-        },
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0, y: 60 },
         {
           opacity: 1,
           y: 0,
-          rotationX: 0,
-          duration: 1,
-          ease: "power4.out",
+          duration: 0.9,
+          ease: 'power4.out',
           scrollTrigger: {
             trigger: titleRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
         }
       );
 
-      // Form fields animation
-      gsap.fromTo(formRef.current?.querySelectorAll('.form-field'),
-        { 
-          opacity: 0,
-          x: -50,
-          rotationY: -10 
-        },
+      gsap.fromTo(
+        formRef.current?.querySelectorAll('.form-field'),
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
-          x: 0,
-          rotationY: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: formRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-      // Contact info animation
-      gsap.fromTo(contactInfoRef.current?.children,
-        { 
-          opacity: 0,
-          scale: 0.8,
-          y: 30 
-        },
-        {
-          opacity: 1,
-          scale: 1,
           y: 0,
           duration: 0.5,
-          stagger: 0.1,
-          ease: "back.out(1.7)",
+          stagger: 0.08,
+          ease: 'power2.out',
           scrollTrigger: {
-            trigger: contactInfoRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
+            trigger: formRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
         }
       );
 
-      // Social links animation
-      gsap.fromTo(socialRef.current?.children,
-        { 
-          scale: 0,
-          rotation: 180,
-          opacity: 0 
-        },
+      gsap.fromTo(
+        contactInfoRef.current?.children,
+        { opacity: 0, y: 20 },
         {
-          scale: 1,
-          rotation: 0,
           opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "back.out(2)",
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: contactInfoRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      gsap.fromTo(
+        socialRef.current?.children,
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          stagger: 0.06,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: socialRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
+            start: 'top 88%',
+            toggleActions: 'play none none reverse',
+          },
         }
       );
     }, sectionRef);
@@ -123,38 +99,22 @@ const ModernContact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     setIsSubmitting(true);
-    
-    // Animate submit button
-    const submitBtn = e.currentTarget.querySelector('button[type="submit"]');
-    gsap.to(submitBtn, {
-      scale: 0.95,
-      duration: 0.1,
-      yoyo: true,
-      repeat: 1,
-      ease: "power2.inOut"
-    });
 
     try {
-      // EmailJS configuration
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-      // Validate environment variables
       if (!serviceId || !templateId || !publicKey) {
         const missingVars = [];
         if (!serviceId) missingVars.push('VITE_EMAILJS_SERVICE_ID');
         if (!templateId) missingVars.push('VITE_EMAILJS_TEMPLATE_ID');
         if (!publicKey) missingVars.push('VITE_EMAILJS_PUBLIC_KEY');
-        
-        console.error('EmailJS configuration missing:', missingVars);
         throw new Error(`EmailJS is not configured. Missing: ${missingVars.join(', ')}`);
       }
 
-      // Send email using EmailJS
-      const response = await emailjs.send(
+      await emailjs.send(
         serviceId,
         templateId,
         {
@@ -162,50 +122,30 @@ const ModernContact = () => {
           from_email: formData.email,
           project_type: formData.project || 'Not specified',
           message: formData.message,
-          to_email: '95abdullah95@gmail.com', // Your email
+          to_email: 'hello@veriencestudio.com',
         },
         publicKey
       );
 
-      // Success feedback
       toast.success('Message sent successfully!', {
-        description: 'I\'ll get back to you as soon as possible.',
+        description: "I'll get back to you as soon as possible.",
         duration: 5000,
       });
 
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        project: '',
-        message: ''
-      });
-
-      // Animate success
-      if (submitBtn) {
-        gsap.to(submitBtn, {
-          scale: 1.05,
-          duration: 0.2,
-          yoyo: true,
-          repeat: 1,
-          ease: "power2.inOut"
-        });
-      }
-    } catch (error: any) {
+      setFormData({ name: '', email: '', project: '', message: '' });
+    } catch (error: unknown) {
       console.error('Error sending email:', error);
-      
-      // Provide detailed error feedback
+
       let errorMessage = 'Please try again later or contact me directly via email.';
-      
-      if (error?.message?.includes('not configured')) {
+      const err = error as { message?: string; text?: string };
+      if (err?.message?.includes('not configured')) {
         errorMessage = 'Email service is not configured. Please contact me directly via email.';
-      } else if (error?.text) {
-        errorMessage = `Email service error: ${error.text}`;
-      } else if (error?.message) {
-        errorMessage = error.message;
+      } else if (err?.text) {
+        errorMessage = `Email service error: ${err.text}`;
+      } else if (err?.message) {
+        errorMessage = err.message;
       }
-      
-      // Error feedback
+
       toast.error('Failed to send message', {
         description: errorMessage,
         duration: 7000,
@@ -216,248 +156,124 @@ const ModernContact = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleFocus = (fieldName: string) => {
-    setFocusedField(fieldName);
-  };
-
-  const handleBlur = () => {
-    setFocusedField(null);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const contactInfo = [
     {
       icon: Mail,
-      label: "Email",
-      value: "95abdullah13@gmail.com",
-      gradient: "bg-gradient-neon",
-      href: "mailto:95abdullah13@gmail.com"
+      label: 'Email',
+      value: 'hello@veriencestudio.com',
+      href: 'mailto:hello@veriencestudio.com',
+    },
+    {
+      icon: Globe,
+      label: 'Studio',
+      value: 'veriencestudio.com',
+      href: 'https://veriencestudio.com',
     },
     {
       icon: Phone,
-      label: "Phone",
-      value: "+91 9599454313",
-      gradient: "bg-gradient-cyber",
-      href: "tel:+919599454313"
+      label: 'Phone',
+      value: '+91 9599454313',
+      href: 'tel:+919599454313',
     },
     {
       icon: MapPin,
-      label: "Location",
-      value: "Delhi, India",
-      gradient: "bg-gradient-primary",
-      href: null
-    }
+      label: 'Location',
+      value: 'Delhi, India',
+      href: null,
+    },
   ];
 
   const socialLinks = [
-    { icon: Github, label: "GitHub", href: "https://github.com/Maxzovert", hoverColor: "hover:text-primary" },
-    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/95abdullah99/", hoverColor: "hover:text-secondary" },
-    { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/_maxzovert_", hoverColor: "hover:text-accent" },
-    { icon: MessageSquare, label: "Discord", href: "https://discord.com/users/983761421269598248", hoverColor: "hover:text-green" }
+    { icon: Globe, label: 'Verience Studio', href: 'https://veriencestudio.com' },
+    { icon: Github, label: 'GitHub', href: 'https://github.com/Maxzovert' },
+    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/95abdullah99/' },
+    { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/_maxzovert_' },
+    { icon: MessageSquare, label: 'Discord', href: 'https://discord.com/users/983761421269598248' },
   ];
 
   return (
-    <section id="contact" ref={sectionRef} className="section-padding paper-bg relative overflow-hidden min-h-[80vh]">
-      <div className="editorial-divider absolute top-0 left-0" />
+    <section id="contact" ref={sectionRef} className="section-padding paper-bg relative overflow-hidden">
+      <SectionDecorations variant="contact" />
 
-      <div className="container mx-auto max-w-6xl relative z-10 px-4 sm:px-6">
-        <div className="text-center mb-12 sm:mb-16 md:mb-20 relative">
-          <span className="script-word absolute left-[38%] top-[-10%] hidden md:block rotate-[-4deg]">
-            let's work
+      <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
+        <div className="text-left mb-10 sm:mb-12 md:mb-16 relative">
+          <div className="flex items-start justify-between gap-4">
+            <h2 ref={titleRef} className="section-title text-left">
+              CONTACT
+            </h2>
+            <span className="star-symbol mt-4 hidden text-3xl opacity-80 md:block">✱</span>
+          </div>
+          <span className="script-word absolute right-[6%] top-[20%] hidden md:block rotate-[5deg] text-5xl">
+            Reach out
           </span>
-          <h2 ref={titleRef} className="section-title section-title-dark text-center leading-none">
-            TOGETHER
-          </h2>
-          <p className="body-copy mt-6 max-w-md mx-auto text-center">
-            Ready to build something extraordinary? Let's discuss your next project.
-          </p>
+          <div className="mt-2 flex items-end gap-4">
+            <p className="body-copy max-w-xl">
+              Ready to build something extraordinary? Send a message or reach out directly.
+            </p>
+            <Sparkles className="mb-1 hidden h-6 w-6 text-editorial-blue opacity-70 md:block rotate-[10deg]" strokeWidth={1.5} />
+          </div>
+          <div className="mt-4 hidden sm:inline-flex items-center gap-2 border border-black/15 bg-white px-3 py-2 rounded-lg rotate-[-3deg]">
+            <ArrowUpRight className="h-4 w-4 text-charcoal" strokeWidth={1.5} />
+            <span className="micro-label text-charcoal">Let's talk</span>
+          </div>
+          <Plus className="absolute right-[22%] top-[8%] hidden h-5 w-5 text-charcoal/40 lg:block rotate-[20deg]" strokeWidth={1.5} />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16">
-          {/* Contact Form */}
-          <div className="glass-card p-6 sm:p-7 md:p-8 relative order-2 lg:order-1">
-            {/* Form glow effect */}
-            <div className="absolute inset-0 bg-gradient-primary opacity-5 rounded-2xl"></div>
-            
-            <div className="relative z-10">
-              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-glow flex items-center">
-                <MessageSquare className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-                Start a Conversation
-              </h3>
-              
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
-                <div className="form-field">
-                  <label htmlFor="name" className="block text-sm font-medium mb-2 text-muted-foreground">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    onFocus={() => handleFocus('name')}
-                    onBlur={handleBlur}
-                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono text-sm sm:text-base touch-manipulation ${
-                      focusedField === 'name'
-                        ? 'border-primary shadow-neon'
-                        : 'border-border hover:border-border/80'
-                    }`}
-                    placeholder="Enter your name"
-                    required
-                  />
-                </div>
-
-                <div className="form-field">
-                  <label htmlFor="email" className="block text-sm font-medium mb-2 text-muted-foreground">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    onFocus={() => handleFocus('email')}
-                    onBlur={handleBlur}
-                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono text-sm sm:text-base touch-manipulation ${
-                      focusedField === 'email'
-                        ? 'border-secondary shadow-cyber'
-                        : 'border-border hover:border-border/80'
-                    }`}
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
-
-                <div className="form-field">
-                  <label htmlFor="project" className="block text-sm font-medium mb-2 text-muted-foreground">
-                    Project Type
-                  </label>
-                  <input
-                    type="text"
-                    id="project"
-                    name="project"
-                    value={formData.project}
-                    onChange={handleInputChange}
-                    onFocus={() => handleFocus('project')}
-                    onBlur={handleBlur}
-                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none font-mono text-sm sm:text-base touch-manipulation ${
-                      focusedField === 'project'
-                        ? 'border-accent shadow-glass'
-                        : 'border-border hover:border-border/80'
-                    }`}
-                    placeholder="Web App, Mobile, AI/ML, etc."
-                  />
-                </div>
-
-                <div className="form-field">
-                  <label htmlFor="message" className="block text-sm font-medium mb-2 text-muted-foreground">
-                    Project Details
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    onFocus={() => handleFocus('message')}
-                    onBlur={handleBlur}
-                    rows={5}
-                    className={`w-full px-4 py-3 sm:py-3.5 rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-300 outline-none resize-none font-mono text-sm sm:text-base touch-manipulation ${
-                      focusedField === 'message'
-                        ? 'border-green shadow-neon'
-                        : 'border-border hover:border-border/80'
-                    }`}
-                    placeholder="Tell me about your project vision..."
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="neon-button w-full group disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base py-3 sm:py-4"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                      Launch Project
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Contact Information */}
-          <div className="space-y-6 sm:space-y-8 order-1 lg:order-2">
-            {/* Contact details */}
+        <div className="grid lg:grid-cols-[1fr_1.25fr] gap-8 sm:gap-10 lg:gap-14 items-start">
+          {/* Contact sidebar */}
+          <div className="space-y-6 sm:space-y-8">
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-glow">
-                Direct Contact
-              </h3>
-              <div ref={contactInfoRef} className="space-y-3 sm:space-y-4">
+              <p className="micro-label text-[var(--gray-mid)] mb-4 tracking-[0.14em]">Direct contact</p>
+              <div ref={contactInfoRef} className="space-y-3">
                 {contactInfo.map((info) => {
-                  const content = (
-                    <div className="flex items-center space-x-3 sm:space-x-4">
-                      <div className={`p-3 sm:p-4 rounded-2xl ${info.gradient} group-hover:scale-110 transition-transform duration-300`}>
-                        <info.icon className="h-5 w-5 sm:h-6 sm:w-6 text-background" />
+                  const inner = (
+                    <>
+                      <div className="contact-info-icon">
+                        <info.icon className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--blue)]" />
                       </div>
-                      <div>
-                        <p className="font-medium text-muted-foreground text-xs sm:text-sm">
-                          {info.label}
-                        </p>
-                        <p className="text-base sm:text-lg font-mono text-glow break-words">
-                          {info.value}
-                        </p>
+                      <div className="min-w-0">
+                        <p className="micro-label text-[var(--gray-mid)] mb-0.5">{info.label}</p>
+                        <p className="font-inter text-sm sm:text-base text-charcoal break-words">{info.value}</p>
                       </div>
-                    </div>
+                      {info.href && (
+                        <ArrowUpRight className="h-4 w-4 text-[var(--gray-mid)] group-hover:text-[var(--blue)] transition-colors flex-shrink-0 ml-auto" />
+                      )}
+                    </>
                   );
 
                   return info.href ? (
                     <a
                       key={info.label}
                       href={info.href}
-                      className="glass-card p-4 sm:p-5 md:p-6 hover:scale-105 transition-all duration-300 group block"
+                      className="contact-info-card glass-card group flex items-center gap-4 p-4 sm:p-5"
                     >
-                      {content}
+                      {inner}
                     </a>
                   ) : (
-                    <div
-                      key={info.label}
-                      className="glass-card p-4 sm:p-5 md:p-6 hover:scale-105 transition-all duration-300 group"
-                    >
-                      {content}
+                    <div key={info.label} className="contact-info-card glass-card flex items-center gap-4 p-4 sm:p-5">
+                      {inner}
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Social links */}
             <div>
-              <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-glow">
-                Connect Online
-              </h4>
-              <div ref={socialRef} className="grid grid-cols-2 gap-3 sm:gap-4">
+              <p className="micro-label text-[var(--gray-mid)] mb-4 tracking-[0.14em]">Connect online</p>
+              <div ref={socialRef} className="grid grid-cols-2 gap-3">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
-                    className={`glass-card p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center text-center hover:scale-110 transition-all duration-300 group ${social.hoverColor}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-social-card glass-card flex items-center gap-3 p-4 group"
                   >
-                    <social.icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 mb-2 group-hover:scale-125 transition-transform duration-300" />
-                    <span className="font-medium font-mono text-xs sm:text-sm">
+                    <social.icon className="h-5 w-5 text-[var(--blue)] group-hover:scale-110 transition-transform" />
+                    <span className="micro-label text-charcoal group-hover:text-[var(--blue)] transition-colors">
                       {social.label}
                     </span>
                   </a>
@@ -465,22 +281,118 @@ const ModernContact = () => {
               </div>
             </div>
 
-            {/* Availability status */}
-            <div className="glass-card p-4 sm:p-5 md:p-6 text-center">
-              <div className="flex items-center justify-center mb-2 sm:mb-3">
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green rounded-full animate-pulse mr-2"></div>
-                <span className="text-green font-mono text-xs sm:text-sm">Available for Projects</span>
+            <div className="glass-card p-4 sm:p-5 flex items-center gap-3">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green opacity-40" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green" />
+              </span>
+              <div>
+                <p className="micro-label text-charcoal tracking-[0.1em]">Available for projects</p>
+                <p className="text-xs text-[var(--gray-mid)] mt-0.5 font-inter">Currently accepting new work</p>
               </div>
-              <p className="text-muted-foreground text-xs sm:text-sm">
-                Currently accepting new projects
-              </p>
             </div>
+          </div>
+
+          {/* Form */}
+          <div className="glass-card p-6 sm:p-8 md:p-10">
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
+              <div className="contact-info-icon">
+                <MessageSquare className="h-5 w-5 text-[var(--blue)]" />
+              </div>
+              <div>
+                <h3 className="font-bebas text-2xl sm:text-3xl uppercase text-[var(--blue)] tracking-[0.04em] leading-none">
+                  Start a conversation
+                </h3>
+                <p className="text-xs text-[var(--gray-mid)] font-inter mt-1">I'll respond within 24 hours</p>
+              </div>
+            </div>
+
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+              <div className="form-field grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="name" className="contact-label">
+                    Your name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="contact-label">
+                    Email address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="you@email.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="project" className="contact-label">
+                  Project type
+                </label>
+                <input
+                  type="text"
+                  id="project"
+                  name="project"
+                  value={formData.project}
+                  onChange={handleInputChange}
+                  className="contact-input"
+                  placeholder="Web app, mobile, e-commerce, etc."
+                />
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="message" className="contact-label">
+                  Project details
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  rows={5}
+                  className="contact-input contact-textarea"
+                  placeholder="Tell me about your project vision, timeline, and goals..."
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="editorial-btn w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send message
+                    <Send className="h-4 w-4" />
+                  </>
+                )}
+              </button>
+            </form>
           </div>
         </div>
       </div>
-
-      {/* Bottom decorative elements */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
     </section>
   );
 };
