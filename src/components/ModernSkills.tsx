@@ -113,21 +113,13 @@ const ModernSkills = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="skills" className="section-padding relative">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-dark opacity-50"></div>
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-
+    <section ref={sectionRef} id="skills" className="section-padding dark-section relative overflow-hidden">
       <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
-        {/* Section title */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20 px-2">
-          <h2 ref={titleRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 leading-tight">
-            <span className="neon-text block sm:inline">SKILLS</span>
-            <span className="hidden sm:inline"> </span>
-            <br className="sm:hidden" />
-            <span className="cyber-text font-mono block sm:inline mt-1 sm:mt-0" data-text="& EXPERTISE">& EXPERTISE</span>
+        <div className="text-left mb-12 sm:mb-16 md:mb-20 px-2">
+          <h2 ref={titleRef} className="section-title section-title-light text-left leading-none">
+            STRENGTHS
           </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-2 sm:px-4">
+          <p className="body-copy mt-4 max-w-xl text-[var(--gray-mid)]">
             A comprehensive toolkit of technologies and frameworks I use to bring ideas to life
           </p>
         </div>
@@ -137,39 +129,33 @@ const ModernSkills = () => {
           {skillCategories.map((category, index) => (
             <div
               key={category.title}
-              className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 group hover:border-primary/50 transition-all duration-500 relative"
+              className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 group transition-all duration-300 relative"
             >
-              {/* Category header */}
               <div className="flex items-center mb-3 sm:mb-4 md:mb-6">
-                <div className={`p-2.5 sm:p-3 md:p-3.5 lg:p-4 rounded-xl sm:rounded-2xl ${category.gradient} group-hover:scale-110 transition-transform duration-300 mr-3 sm:mr-4 flex-shrink-0`}>
-                  <category.icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
+                <div className="p-2.5 sm:p-3 border border-white/30 group-hover:border-[var(--bg-paper)] transition-colors mr-3 sm:mr-4 flex-shrink-0">
+                  <category.icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[var(--bg-paper)]" />
                 </div>
-                <h3 className="font-bold text-base sm:text-lg md:text-xl text-glow break-words">
+                <h3 className="font-bebas text-lg sm:text-xl uppercase tracking-tight text-[var(--bg-paper)]">
                   {category.title}
                 </h3>
               </div>
 
-              {/* Skills list */}
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-muted/50 rounded-md sm:rounded-lg text-muted-foreground hover:bg-primary/20 hover:text-primary transition-all duration-200 font-mono border border-muted/30 hover:border-primary/30"
+                    className="px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 text-xs sm:text-sm border border-white/20 text-[var(--gray-mid)] hover:border-[var(--bg-paper)] hover:text-[var(--bg-paper)] transition-all duration-200 font-inter"
                   >
                     {skill}
                   </span>
                 ))}
               </div>
-
-              {/* Hover effect overlay */}
-              <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-2xl"></div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Bottom border */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+      <div className="editorial-divider absolute bottom-0 left-0 opacity-30" />
     </section>
   );
 };

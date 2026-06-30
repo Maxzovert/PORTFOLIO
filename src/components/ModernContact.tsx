@@ -262,22 +262,19 @@ const ModernContact = () => {
   ];
 
   return (
-    <section id="contact" ref={sectionRef} className="section-padding relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 cyber-grid opacity-20"></div>
-      <div className="absolute top-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-gradient-neon morphing-blob opacity-10 blur-3xl"></div>
-      <div className="absolute bottom-1/4 left-1/4 w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-cyber morphing-blob opacity-10 blur-3xl" style={{ animationDelay: '-3s' }}></div>
+    <section id="contact" ref={sectionRef} className="section-padding paper-bg relative overflow-hidden min-h-[80vh]">
+      <div className="editorial-divider absolute top-0 left-0" />
 
       <div className="container mx-auto max-w-6xl relative z-10 px-4 sm:px-6">
-        {/* Section title */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8">
-            <span className="neon-text">LET'S</span>{' '}
-            <span className="cyber-text font-mono" data-text="CONNECT">CONNECT</span>
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 relative">
+          <span className="script-word absolute left-[38%] top-[-10%] hidden md:block rotate-[-4deg]">
+            let's work
+          </span>
+          <h2 ref={titleRef} className="section-title section-title-dark text-center leading-none">
+            TOGETHER
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-4">
-            Ready to build something extraordinary? Let's discuss your next project and bring 
-            your vision to life with cutting-edge technology and creative innovation.
+          <p className="body-copy mt-6 max-w-md mx-auto text-center">
+            Ready to build something extraordinary? Let's discuss your next project.
           </p>
         </div>
 

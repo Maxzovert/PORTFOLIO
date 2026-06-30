@@ -13,7 +13,7 @@ const Index = () => {
     <>
       <CustomCursor />
       <ThemeToggle />
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-paper">
         <ModernHero />
         <ModernAbout />
         <ModernSkills />

@@ -93,21 +93,13 @@ const ModernEducation = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="education" className="section-padding relative">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-dark opacity-50"></div>
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-
+    <section ref={sectionRef} id="education" className="section-padding dark-section relative overflow-hidden">
       <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
-        {/* Section title */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20 px-2">
-          <h2 ref={titleRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 leading-tight">
-            <span className="neon-text block sm:inline">EDUCATION</span>
-            <span className="hidden sm:inline"> </span>
-            <br className="sm:hidden" />
-            <span className="cyber-text font-mono block sm:inline mt-1 sm:mt-0" data-text="& QUALIFICATIONS">& QUALIFICATIONS</span>
+        <div className="text-left mb-12 sm:mb-16 md:mb-20">
+          <h2 ref={titleRef} className="section-title section-title-light text-left">
+            EDUCATION
           </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-2 sm:px-4">
+          <p className="body-copy mt-4 max-w-lg text-[var(--gray-mid)]">
             Academic background and continuous learning journey
           </p>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Github, Play, Star } from 'lucide-react';
+import { Github, Play } from 'lucide-react';
 import writexImage from '@/assets/Writex.png';
 import thryveImage from '@/assets/thryve.png';
 import medRemImage from '@/assets/Medrem.png';
@@ -266,44 +266,38 @@ const ModernProjects = () => {
   const filteredProjects = activeFilter === "Personal" ? personalProjects : clientProjects;
 
   return (
-    <section id="projects" ref={sectionRef} className="section-padding relative">
-      {/* Background grid */}
-      <div className="absolute inset-0 cyber-grid opacity-30"></div>
-      
-      {/* Top border */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
+    <section id="projects" ref={sectionRef} className="section-padding paper-bg relative overflow-hidden">
+      <div className="editorial-divider absolute top-0 left-0" />
 
       <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
-        {/* Section title */}
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8">
-            <span className="neon-text">FEATURED</span>{' '}
-            <span className="cyber-text font-mono" data-text="WORKS">WORKS</span>
+        <div className="text-left mb-8 sm:mb-12 relative">
+          <span className="script-word absolute right-[5%] top-0 hidden md:block rotate-[-4deg] text-5xl">
+            {activeFilter === "Personal" ? "Builds" : "Clients"}
+          </span>
+          <h2 ref={titleRef} className="section-title text-left">
+            PROJECTS
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light px-4">
+          <p className="body-copy mt-4 max-w-lg">
             {activeFilter === "Personal"
-              ? "Personal projects — exploring the boundaries of technology through creativity, performance, and user experience."
+              ? "Personal projects — exploring technology through creativity, performance, and user experience."
               : "Client & freelancing work — websites and platforms delivered for businesses and brands."}
           </p>
         </div>
 
-        {/* Filter tabs */}
-        <div ref={filterRef} className="flex justify-center mb-8 sm:mb-12 md:mb-16 px-4">
-          <div className="glass-card p-1.5 sm:p-2 flex flex-wrap sm:flex-nowrap gap-2 sm:space-x-2 justify-center">
-            {filters.map((filter) => (
-              <button
-                key={filter.name}
-                onClick={() => handleFilterClick(filter.name)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
-                  activeFilter === filter.name
-                    ? 'bg-primary text-primary-foreground shadow-neon'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                }`}
-              >
-                {filter.name}
-              </button>
-            ))}
-          </div>
+        <div ref={filterRef} className="mb-8 sm:mb-12 md:mb-16 inline-flex border border-black">
+          {filters.map((filter) => (
+            <button
+              key={filter.name}
+              onClick={() => handleFilterClick(filter.name)}
+              className={`px-6 sm:px-8 py-3 micro-label transition-all duration-300 border-r border-black last:border-r-0 ${
+                activeFilter === filter.name
+                  ? 'bg-[var(--black)] text-[var(--bg-paper)]'
+                  : 'bg-transparent text-[var(--charcoal)] hover:bg-[var(--gray-light)]'
+              }`}
+            >
+              {filter.name}
+            </button>
+          ))}
         </div>
 
         {/* Projects grid */}
@@ -316,19 +310,18 @@ const ModernProjects = () => {
               }`}
             >
               {/* Project preview */}
-              <div className={`h-40 sm:h-44 md:h-48 ${project.gradient} relative overflow-hidden`}>
+              <div className={`h-40 sm:h-44 md:h-48 relative overflow-hidden border-b border-black/10`}>
                 {project.image ? (
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover editorial-img group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : null}
                 
                 {project.featured && (
-                  <div className="absolute top-4 left-4 flex items-center space-x-2 z-10">
-                    <Star className="h-4 w-4 text-background fill-current drop-shadow-lg" />
-                    <span className="text-background text-sm font-medium drop-shadow-lg">Featured</span>
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="micro-label bg-[var(--black)] text-[var(--bg-paper)] px-2 py-1">Featured</span>
                   </div>
                 )}
                 
@@ -362,25 +355,24 @@ const ModernProjects = () => {
               {/* Project info */}
               <div className="p-4 sm:p-5 md:p-6">
                 <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="text-xs font-mono text-primary border border-primary/30 px-2 py-1 rounded bg-primary/10">
+                  <span className="micro-label border border-black/30 px-2 py-1 text-[var(--blue)]">
                     {project.category}
                   </span>
                 </div>
 
-                <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3 group-hover:text-primary transition-colors duration-300">
+                <h3 className="font-bebas text-xl sm:text-2xl mb-2 sm:mb-3 uppercase tracking-tight group-hover:text-[var(--blue)] transition-colors">
                   {project.title}
                 </h3>
                 
-                <p className="text-muted-foreground leading-relaxed mb-3 sm:mb-4 text-xs sm:text-sm">
+                <p className="body-copy mb-3 sm:mb-4 text-sm">
                   {project.description}
                 </p>
                 
-                {/* Tech stack */}
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 text-xs bg-muted/50 rounded text-muted-foreground hover:bg-primary/20 hover:text-primary transition-all duration-200 font-mono"
+                      className="px-2 py-1 text-xs border border-black/15 text-charcoal font-inter"
                     >
                       {tech}
                     </span>
@@ -388,23 +380,25 @@ const ModernProjects = () => {
                 </div>
               </div>
 
-              {/* Hover glow effect */}
-              <div className="absolute inset-0 border border-primary/0 group-hover:border-primary/30 transition-all duration-500 rounded-2xl"></div>
+              <div className="absolute inset-0 border border-transparent group-hover:border-black/30 transition-all duration-300 pointer-events-none" />
             </div>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center px-4">
-          <button className="neon-button group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
-            <Github className="mr-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
+        <div className="text-left px-4 mt-8">
+          <a
+            href="https://github.com/Maxzovert"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="editorial-btn inline-flex"
+          >
+            <Github className="mr-2 h-4 w-4" />
             Explore All Projects
-          </button>
+          </a>
         </div>
       </div>
 
-      {/* Bottom border */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+      <div className="editorial-divider absolute bottom-0 left-0" />
     </section>
   );
 };
