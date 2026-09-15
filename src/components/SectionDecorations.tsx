@@ -5,7 +5,7 @@ import { Asterisk, ArrowUpRight, Heart, Plus, Sparkles, Star } from 'lucide-reac
 
 gsap.registerPlugin(ScrollTrigger);
 
-type SectionVariant = 'about' | 'experience' | 'projects' | 'contact' | 'skills' | 'education';
+type SectionVariant = 'about' | 'experience' | 'projects' | 'contact' | 'skills' | 'education' | 'featured';
 
 interface DecoItem {
   id: string;
@@ -29,8 +29,9 @@ const SECTION_FRAME: Record<SectionVariant, SectionFrame> = {
   skills: { num: '03', script: 'Craft', railLeft: 'Stack', railRight: 'Tools', symbolLeft: '✱' },
   experience: { num: '04', script: 'Journey', railLeft: 'Career', railRight: 'Impact', symbolRight: '✱' },
   education: { num: '05', script: 'Learn', railLeft: 'Study', railRight: 'Growth', symbolLeft: '✱' },
-  projects: { num: '06', script: 'Build', railLeft: 'Launch', railRight: 'Ship', symbolRight: '✱' },
-  contact: { num: '07', script: 'Hello', railLeft: 'Reach', railRight: 'Connect' },
+  featured: { num: '06', script: 'Picks', railLeft: 'Select', railRight: 'Ship', symbolRight: '✱' },
+  projects: { num: '07', script: 'Build', railLeft: 'Launch', railRight: 'Work', symbolLeft: '✱' },
+  contact: { num: '08', script: 'Hello', railLeft: 'Reach', railRight: 'Connect' },
 };
 
 const DECO_BY_SECTION: Record<SectionVariant, DecoItem[]> = {
@@ -67,6 +68,17 @@ const DECO_BY_SECTION: Record<SectionVariant, DecoItem[]> = {
     { id: 'proj-star-l', Icon: Star, className: 'section-deco section-deco-proj-star-l', strokeWidth: 1.5 },
     { id: 'proj-plus-r', Icon: Plus, className: 'section-deco section-deco-proj-plus-r', strokeWidth: 1.5 },
     { id: 'proj-symbol', symbol: '●', className: 'section-deco section-deco-proj-symbol' },
+  ],
+  featured: [
+    { id: 'feat-plus', Icon: Plus, className: 'section-deco section-deco-proj-plus', strokeWidth: 1.5 },
+    { id: 'feat-star', Icon: Star, className: 'section-deco section-deco-proj-star', strokeWidth: 1.5 },
+    { id: 'feat-asterisk', Icon: Asterisk, className: 'section-deco section-deco-proj-asterisk', strokeWidth: 2 },
+    { id: 'feat-spark', Icon: Sparkles, className: 'section-deco section-deco-proj-spark', strokeWidth: 1.5 },
+    { id: 'feat-arrow', Icon: ArrowUpRight, className: 'section-deco section-deco-proj-arrow', strokeWidth: 1.5 },
+    { id: 'feat-heart', Icon: Heart, className: 'section-deco section-deco-proj-heart', strokeWidth: 1.5 },
+    { id: 'feat-star-l', Icon: Star, className: 'section-deco section-deco-proj-star-l', strokeWidth: 1.5 },
+    { id: 'feat-plus-r', Icon: Plus, className: 'section-deco section-deco-proj-plus-r', strokeWidth: 1.5 },
+    { id: 'feat-symbol', symbol: '✱', className: 'section-deco section-deco-proj-symbol' },
   ],
   contact: [
     { id: 'contact-spark', Icon: Sparkles, className: 'section-deco section-deco-contact-spark', strokeWidth: 1.5 },

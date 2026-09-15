@@ -14,10 +14,12 @@ import legaloidsImage from '@/assets/Legaloids.png';
 import metamicrodigitalImage from '@/assets/Metamicrodigital.png';
 import tobedoneImage from '@/assets/TOBEDONE.jpeg';
 import vcrmImage from '@/assets/vcrm.png';
+import gitworkImage from '@/assets/gitwork.png';
+import maxstarterImage from '@/assets/maxstarter.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ProjectType = 'Personal' | 'Client' | 'Verience';
+type ProjectType = 'Open Source' | 'Client' | 'Verience';
 
 interface Project {
   title: string;
@@ -47,7 +49,49 @@ const ModernProjects = () => {
   const [activeFilter, setActiveFilter] = useState<string>('All');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const personalProjects: Project[] = [
+  const openSourceProjects: Project[] = [
+    {
+      title: 'MaxStarter',
+      category: 'Developer Tool',
+      description:
+        'An opinionated Expo + React Native CLI starter I built and published on npm. Answer a few prompts and get a ready-to-build Expo app with routing, optional screens, theme tokens, icons, and a design.md apply workflow — without generator bloat overwriting your code.',
+      highlights: [
+        'Interactive CLI (npx maxstarter) with Expo SDK presets, screens, tabs, and auth stubs',
+        'Centralized theme tokens, AppIcon abstraction, and ownership markers that protect your code',
+        'design.md + logo apply workflow so visuals stay intentional after generation',
+        'Published on npm with docs site, contributing guide, and MIT license',
+      ],
+      tech: ['Expo', 'React Native', 'TypeScript', 'Expo Router', 'npm'],
+      image: maxstarterImage,
+      liveLink: 'https://maxstarter.vercel.app/',
+      githubLink: 'https://github.com/Maxzovert/maxstarter',
+      extraLinks: [
+        {
+          label: 'npm',
+          href: 'https://www.npmjs.com/package/maxstarter',
+        },
+      ],
+      type: 'Open Source',
+      featured: true,
+    },
+    {
+      title: 'Gitwork',
+      category: 'AI/ML',
+      description:
+        'An AI-powered GitHub collaboration workspace I built for teams to query codebases with RAG, review AI-generated commit and pull-request summaries, convert meeting recordings into GitHub issues, and generate onboarding documentation — all in one unified platform.',
+      highlights: [
+        'Branch-aware source indexing with 768-dim pgvector embeddings and incremental re-indexing',
+        'File-grounded codebase Q&A using RAG + Google Gemini with relevant file references',
+        'Meeting audio → AssemblyAI transcription → AI chapter extraction → GitHub issue drafts',
+        'AI PR risk digests, commit timeline with webhooks, and shared workspaces with role-based invites',
+      ],
+      tech: ['Next.js', 'tRPC', 'Prisma', 'pgvector', 'Gemini', 'Clerk'],
+      image: gitworkImage,
+      liveLink: 'https://gitwork-mauve.vercel.app/',
+      githubLink: 'https://github.com/Maxzovert/gitwork.git',
+      type: 'Open Source',
+      featured: true,
+    },
     {
       title: 'WRITE-X',
       category: 'Web',
@@ -62,7 +106,7 @@ const ModernProjects = () => {
       image: writexImage,
       liveLink: 'https://writtex.onrender.com/',
       githubLink: 'https://github.com/Maxzovert/writex.git',
-      type: 'Personal',
+      type: 'Open Source',
       featured: true,
     },
     {
@@ -80,7 +124,7 @@ const ModernProjects = () => {
       image: thryveImage,
       liveLink: 'https://thryve-orpin.vercel.app/',
       githubLink: 'https://github.com/Maxzovert/thryve.git',
-      type: 'Personal',
+      type: 'Open Source',
       featured: true,
     },
     {
@@ -97,7 +141,7 @@ const ModernProjects = () => {
       image: resolviaImage,
       liveLink: 'https://github.com/Maxzovert/Resolvia.git',
       githubLink: 'https://github.com/Maxzovert/Resolvia.git',
-      type: 'Personal',
+      type: 'Open Source',
       featured: true,
     },
     {
@@ -114,7 +158,7 @@ const ModernProjects = () => {
       image: medRemImage,
       liveLink: 'https://github.com/Maxzovert/med-rem.git',
       githubLink: 'https://github.com/Maxzovert/med-rem.git',
-      type: 'Personal',
+      type: 'Open Source',
     },
     {
       title: 'SnapNotes',
@@ -130,7 +174,7 @@ const ModernProjects = () => {
       image: snapNotesImage,
       liveLink: 'https://github.com/Maxzovert/snapnotes.git',
       githubLink: 'https://github.com/Maxzovert/snapnotes.git',
-      type: 'Personal',
+      type: 'Open Source',
     },
     {
       title: 'LitChat',
@@ -146,7 +190,7 @@ const ModernProjects = () => {
       image: LitChatImage,
       liveLink: 'https://github.com/Maxzovert/LitChat.git',
       githubLink: 'https://github.com/Maxzovert/LitChat.git',
-      type: 'Personal',
+      type: 'Open Source',
     },
   ];
 
@@ -249,28 +293,28 @@ const ModernProjects = () => {
     },
   ];
 
-  const filters = ['All', 'Clients', 'Personal', 'Verience'] as const;
+  const filters = ['All', 'Clients', 'Open Source', 'Verience'] as const;
 
   const filteredProjects =
-    activeFilter === 'Personal'
-      ? personalProjects
+    activeFilter === 'Open Source'
+      ? openSourceProjects
       : activeFilter === 'Clients'
         ? clientProjects
         : activeFilter === 'Verience'
           ? verienceProjects
-          : [...clientProjects, ...personalProjects, ...verienceProjects];
+          : [...clientProjects, ...openSourceProjects, ...verienceProjects];
 
   const sectionSubtitle =
-    activeFilter === 'Personal'
-      ? 'Personal projects, exploring technology through creativity, performance, and user experience.'
+    activeFilter === 'Open Source'
+      ? 'Open-source projects and tools I build and share — CLIs, apps, and experiments the community can use and fork.'
       : activeFilter === 'Clients'
         ? 'Client and freelancing work, websites and platforms delivered for businesses and brands.'
         : activeFilter === 'Verience'
           ? 'In-house products built at Verience Studio, our own tools for project management, CRM, and daily operations.'
-          : 'A full showcase of Verience builds, client work, and personal projects, from shipped products to experimental ideas.';
+          : 'A full showcase of Verience builds, client work, and open-source projects, from shipped products to experimental ideas.';
 
   const scriptLabel =
-    activeFilter === 'Personal'
+    activeFilter === 'Open Source'
       ? 'Builds'
       : activeFilter === 'Clients'
         ? 'Clients'

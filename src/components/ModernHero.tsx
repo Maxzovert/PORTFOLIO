@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, ArrowUpRight, Asterisk, Download, Heart, Plus, Sparkles, Star } from 'lucide-react';
-import resumePdf from '@/assets/MAIN_RESUME.pdf';
+import resumePdf from '@/assets/Resume.pdf';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -244,7 +244,7 @@ const ModernHero = () => {
       </div>
 
       <div ref={ctaRef} className="hero-cta">
-        <button type="button" onClick={() => scrollTo('projects')} className="editorial-btn editorial-btn-hero">
+        <button type="button" onClick={() => scrollTo('featured')} className="editorial-btn editorial-btn-hero">
           View Projects
         </button>
         <button

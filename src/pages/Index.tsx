@@ -5,6 +5,7 @@ import ModernAbout from '@/components/ModernAbout';
 import ModernSkills from '@/components/ModernSkills';
 import ModernExperience from '@/components/ModernExperience';
 import ModernEducation from '@/components/ModernEducation';
+import ModernFeatured from '@/components/ModernFeatured';
 import ModernProjects from '@/components/ModernProjects';
 import ModernContact from '@/components/ModernContact';
 import SectionDivider from '@/components/SectionDivider';
@@ -24,6 +25,8 @@ const Index = () => {
         <ModernExperience />
         <SectionDivider variant="to-dark" />
         <ModernEducation />
+        <SectionDivider variant="dark" />
+        <ModernFeatured />
         <SectionDivider variant="to-light" />
         <ModernProjects />
         <SectionDivider variant="light" />
