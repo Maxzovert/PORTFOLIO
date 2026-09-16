@@ -67,13 +67,13 @@ const ModernExperience = () => {
 
   const experiences = [
     {
-      title: "Founder",
+      title: "Co-Founder",
       company: "Verience Media and Technology",
       companyUrl: "https://veriencestudio.com",
       location: "India",
-      type: "Founder",
+      type: "Co-Founder",
       period: "2025 – Present",
-      description: "Founded Verience Media and Technology to build digital products, deliver modern web experiences, and work across design, development, and technology strategy.",
+      description: "Co-founded Verience Media and Technology to build digital products, deliver modern web experiences, and work across design, development, and technology strategy.",
       achievements: [
         "Leading product direction, development workflows, and delivery standards",
         "Building a strong foundation across web development, branding, and digital execution",

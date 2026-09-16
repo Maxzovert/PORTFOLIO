@@ -195,7 +195,7 @@ const ModernAbout = () => {
           <div className="lg:col-span-7">
             <div ref={textRef} className="max-w-2xl space-y-6">
               <p className="font-inter text-[1.35rem] leading-[1.45] tracking-[-0.025em] text-charcoal md:text-[1.5rem]">
-              I'm a full-stack developer and founder passionate about building products that solve real-world problems. From frontend development to backend architecture, cloud infrastructure, databases, and deployment, I handle the entire product lifecycle.
+              I'm a full-stack developer and co-founder passionate about building products that solve real-world problems. From frontend development to backend architecture, cloud infrastructure, databases, and deployment, I handle the entire product lifecycle.
               </p>
               <p className="font-inter text-[1.35rem] leading-[1.45] tracking-[-0.025em] text-charcoal md:text-[1.5rem]">
               I've shipped production-ready applications with active users, focusing on scalability, performance, and exceptional user experiences. I enjoy turning ambitious ideas into reliable digital products while continuously exploring new technologies to build faster, smarter, and better solutions.

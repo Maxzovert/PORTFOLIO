@@ -19,7 +19,7 @@ import maxstarterImage from '@/assets/maxstarter.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ProjectType = 'Open Source' | 'Client' | 'Verience';
+type ProjectType = 'Open Source' | 'Client' | 'Personal';
 
 interface Project {
   title: string;
@@ -194,7 +194,7 @@ const ModernProjects = () => {
     },
   ];
 
-  const verienceProjects: Project[] = [
+  const personalProjects: Project[] = [
     {
       title: 'TOBEDONE',
       category: 'Project Management',
@@ -217,7 +217,7 @@ const ModernProjects = () => {
           icon: 'android',
         },
       ],
-      type: 'Verience',
+      type: 'Personal',
       featured: true,
     },
     {
@@ -234,7 +234,7 @@ const ModernProjects = () => {
       tech: ['Next.js', 'PostgreSQL', 'Tailwind', 'TypeScript'],
       image: vcrmImage,
       liveLink: 'https://vs-crm-nine.vercel.app/',
-      type: 'Verience',
+      type: 'Personal',
       featured: true,
     },
   ];
@@ -293,33 +293,33 @@ const ModernProjects = () => {
     },
   ];
 
-  const filters = ['All', 'Clients', 'Open Source', 'Verience'] as const;
+  const filters = ['All', 'Clients', 'Open Source', 'Personal'] as const;
 
   const filteredProjects =
     activeFilter === 'Open Source'
       ? openSourceProjects
       : activeFilter === 'Clients'
         ? clientProjects
-        : activeFilter === 'Verience'
-          ? verienceProjects
-          : [...clientProjects, ...openSourceProjects, ...verienceProjects];
+        : activeFilter === 'Personal'
+          ? personalProjects
+          : [...clientProjects, ...openSourceProjects, ...personalProjects];
 
   const sectionSubtitle =
     activeFilter === 'Open Source'
       ? 'Open-source projects and tools I build and share — CLIs, apps, and experiments the community can use and fork.'
       : activeFilter === 'Clients'
         ? 'Client and freelancing work, websites and platforms delivered for businesses and brands.'
-        : activeFilter === 'Verience'
-          ? 'In-house products built at Verience Studio, our own tools for project management, CRM, and daily operations.'
-          : 'A full showcase of Verience builds, client work, and open-source projects, from shipped products to experimental ideas.';
+        : activeFilter === 'Personal'
+          ? 'Personal products and in-house builds — tools I use and ship for day-to-day work.'
+          : 'A full showcase of personal builds, client work, and open-source projects, from shipped products to experimental ideas.';
 
   const scriptLabel =
     activeFilter === 'Open Source'
       ? 'Builds'
       : activeFilter === 'Clients'
         ? 'Clients'
-        : activeFilter === 'Verience'
-          ? 'Verience'
+        : activeFilter === 'Personal'
+          ? 'Personal'
           : 'All Work';
 
   const handleFilterClick = (filterName: string) => {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Send, Mail, MapPin, Phone, Github, Linkedin, Instagram, MessageSquare, Loader2, ArrowUpRight, Plus, Sparkles, Globe } from 'lucide-react';
+import { Send, MapPin, Phone, Github, Linkedin, Instagram, MessageSquare, Loader2, ArrowUpRight, Plus, Sparkles } from 'lucide-react';
 import SectionDecorations from './SectionDecorations';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
@@ -161,18 +161,6 @@ const ModernContact = () => {
 
   const contactInfo = [
     {
-      icon: Mail,
-      label: 'Email',
-      value: 'hello@veriencestudio.com',
-      href: 'mailto:hello@veriencestudio.com',
-    },
-    {
-      icon: Globe,
-      label: 'Studio',
-      value: 'veriencestudio.com',
-      href: 'https://veriencestudio.com',
-    },
-    {
       icon: Phone,
       label: 'Phone',
       value: '+91 9599454313',
@@ -187,7 +175,6 @@ const ModernContact = () => {
   ];
 
   const socialLinks = [
-    { icon: Globe, label: 'Verience Studio', href: 'https://veriencestudio.com' },
     { icon: Github, label: 'GitHub', href: 'https://github.com/Maxzovert' },
     { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/95abdullah99/' },
     { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/_maxzovert_' },
