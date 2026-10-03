@@ -67,22 +67,6 @@ const ModernExperience = () => {
 
   const experiences = [
     {
-      title: "Co-Founder",
-      company: "Verience Media and Technology",
-      companyUrl: "https://veriencestudio.com",
-      location: "India",
-      type: "Co-Founder",
-      period: "2025 – Present",
-      description: "Co-founded Verience Media and Technology to build digital products, deliver modern web experiences, and work across design, development, and technology strategy.",
-      achievements: [
-        "Leading product direction, development workflows, and delivery standards",
-        "Building a strong foundation across web development, branding, and digital execution",
-        "Managing client requirements, technical planning, and end-to-end implementation"
-      ],
-      technologies: ["React.js", "Next.js", "Node.js", "Tailwind CSS", "Branding", "Product Strategy"],
-      gradient: "bg-gradient-cyber"
-    },
-    {
       title: "MERN Stack Developer (Frontend-Focused)",
       company: "Metaarth Finserv Pvt. Ltd.",
       location: "Delhi, India",

@@ -138,7 +138,7 @@ const ModernAbout = () => {
   ];
 
   const stats = [
-    { number: '50+', label: 'Projects' },
+    { number: '20+', label: 'Projects' },
     { number: '2+', label: 'Years' },
     { number: '100%', label: 'Passion' },
     { number: '∞', label: 'Learning' },
@@ -163,13 +163,13 @@ const ModernAbout = () => {
 
             <div className="mt-6 max-w-xl">
               <a
-                href="https://veriencestudio.com"
+                href="https://www.linkedin.com/in/95abdullah99/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 border border-black/15 bg-white px-3 py-2 rounded-lg hover:border-[var(--blue)] hover:text-[var(--blue)] transition-colors group"
               >
                 <ArrowUpRight className="h-4 w-4 text-charcoal group-hover:text-[var(--blue)]" strokeWidth={1.5} />
-                <span className="micro-label text-charcoal group-hover:text-[var(--blue)]">Verience Studio</span>
+                <span className="micro-label text-charcoal group-hover:text-[var(--blue)]">LinkedIn</span>
               </a>
             </div>
           </div>
